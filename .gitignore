@@ -1,0 +1,27 @@
+### macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+### Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+
+### Env / secrets
+.env
+.env.*
+!.env.example
+
+### Logs / temp
+logs/
+*.log
+tmp/
+temp/
+
+### Agent Pack runtime artifacts
+.agent-pack/runs/
