@@ -15,10 +15,11 @@ Instead of complex workflows or heavy validation rules, agent-pack relies on one
 “Did this output meet the contract?”
 
 This allows:
- • Simple commands
- • Independent agents
- • Easy verification by humans
- • Fewer hidden assumptions
+
+- Simple commands
+- Independent agents
+- Easy verification by humans
+- Fewer hidden assumptions
 
 Contracts trade flexibility in format for clarity in outcome.
 
@@ -28,7 +29,7 @@ Contracts trade flexibility in format for clarity in outcome.
 
 Every command and agent must produce output that can be summarized using the following structure:
 
-<Output-Structure>
+```md
 
 ### Files updated
 
@@ -50,7 +51,7 @@ Every command and agent must produce output that can be summarized using the fol
 
 - <question or missing info>
 
-</Output-Structure>>
+```
 
 Sections may be empty, but they should never be omitted.
 
@@ -59,9 +60,10 @@ Sections may be empty, but they should never be omitted.
 ## File update rules
 
 When listing files:
- • Only include files that materially changed.
- • Be specific about what changed (not just “updated”).
- • If no files changed, explicitly say so.
+
+- Only include files that materially changed.
+- Be specific about what changed (not just “updated”).
+- If no files changed, explicitly say so.
 
 This makes review fast and avoids silent side effects.
 
@@ -70,13 +72,15 @@ This makes review fast and avoids silent side effects.
 ## Decision rules
 
 A decision should be recorded when:
- • It meaningfully constrains future work, or
- • Multiple reasonable options existed.
+
+- It meaningfully constrains future work, or
+- Multiple reasonable options existed.
 
 Rules:
- • Durable decisions go to DECISIONS.md.
- • Temporary assumptions stay in PLAN.md.
- • If unsure, record the decision and mark it reversible.
+
+- Durable decisions go to DECISIONS.md.
+- Temporary assumptions stay in PLAN.md.
+- If unsure, record the decision and mark it reversible.
 
 Never bury decisions in prose.
 
@@ -85,9 +89,10 @@ Never bury decisions in prose.
 ## Task rules
 
 When creating or modifying tasks:
- • Tasks must be small and executable.
- • Each task must map to exactly one check.
- • Tasks should reference the problem or goal they serve.
+
+- Tasks must be small and executable.
+- Each task must map to exactly one check.
+- Tasks should reference the problem or goal they serve.
 
 If a task cannot be checked, it is not a task.
 
@@ -96,9 +101,10 @@ If a task cannot be checked, it is not a task.
 ## Check rules
 
 Checks should:
- • Verify outcomes, not internal steps.
- • Be runnable by a human or agent without extra context.
- • Produce a clear pass/fail signal.
+
+- Verify outcomes, not internal steps.
+- Be runnable by a human or agent without extra context.
+- Produce a clear pass/fail signal.
 
 If a check is ambiguous, rewrite it.
 
@@ -107,8 +113,9 @@ If a check is ambiguous, rewrite it.
 ## Unknowns and handoffs
 
 If progress depends on missing information:
- • Surface it explicitly under Unknowns / needs input.
- • Do not silently guess unless a default is documented.
+
+- Surface it explicitly under Unknowns / needs input.
+- Do not silently guess unless a default is documented.
 
 Clear handoffs prevent rework and hallucinated assumptions.
 
@@ -128,8 +135,8 @@ If this cannot be done quickly, the output violates the contract.
 
 ## When to tighten or relax contracts
 
- • Tighten contracts when errors repeat or ambiguity increases.
- • Relax contracts when friction outweighs clarity.
+- Tighten contracts when errors repeat or ambiguity increases.
+- Relax contracts when friction outweighs clarity.
 
 The goal is not compliance — it is reliable forward motion.
 

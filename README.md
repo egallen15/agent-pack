@@ -86,14 +86,16 @@ agent-pack intentionally limits itself to four commands. These map loosely to di
 Creates or updates the durable truth for a project.
 
 When to use:
- • Starting a new project
- • Clarifying scope that’s getting fuzzy
+
+- Starting a new project
+- Clarifying scope that’s getting fuzzy
 
 Produces / updates:
- • context/PROJECT.md
- • context/DECISIONS.md
- • work/BACKLOG.md
- • work/STATUS.md
+
+- context/PROJECT.md
+- context/DECISIONS.md
+- work/BACKLOG.md
+- work/STATUS.md
 
 ⸻
 
@@ -102,13 +104,15 @@ Produces / updates:
 Turns 1–3 backlog items into a small, executable plan.
 
 When to use:
- • Before building anything non-trivial
- • When you’re unsure what the next step should be
+
+- Before building anything non-trivial
+- When you’re unsure what the next step should be
 
 Produces / updates:
- • work/PLAN.md
- • work/CHECKS.md
- • context/DECISIONS.md (if new durable decisions are made)
+
+- work/PLAN.md
+- work/CHECKS.md
+- context/DECISIONS.md (if new durable decisions are made)
 
 ⸻
 
@@ -117,12 +121,14 @@ Produces / updates:
 Implements one task from the plan.
 
 When to use:
- • You have a clear task with a defined check
+
+- You have a clear task with a defined check
 
 Produces / updates:
- • Code or artifacts
- • work/STATUS.md
- • A new folder under runs/ describing what changed and how to verify it
+
+- Code or artifacts
+- work/STATUS.md
+- A new folder under runs/ describing what changed and how to verify it
 
 ⸻
 
@@ -131,24 +137,27 @@ Produces / updates:
 Runs acceptance checks and validates outcomes.
 
 When to use:
- • After one or more /ap:do runs
- • Before calling something “done”
+
+- After one or more /ap:do runs
+- Before calling something “done”
 
 Produces / updates:
- • work/CHECKS.md (pass/fail)
- • work/PLAN.md (adds fix tasks if checks fail)
+
+- work/CHECKS.md (pass/fail)
+- work/PLAN.md (adds fix tasks if checks fail)
 
 ⸻
 
 ## Core files (mental model)
 
 You don’t need to remember every file. Just remember what kind of truth each one holds:
- • PROJECT.md → What is this? Who is it for? What constraints matter?
- • DECISIONS.md → What have we locked in, and why?
- • BACKLOG.md → What problems are worth solving?
- • PLAN.md → What are we doing next, exactly?
- • CHECKS.md → How do we know it worked?
- • STATUS.md → Where are we right now?
+
+- PROJECT.md → What is this? Who is it for? What constraints matter?
+- DECISIONS.md → What have we locked in, and why?
+- BACKLOG.md → What problems are worth solving?
+- PLAN.md → What are we doing next, exactly?
+- CHECKS.md → How do we know it worked?
+- STATUS.md → Where are we right now?
 
 If something doesn’t fit cleanly into one of these, it probably doesn’t need its own file.
 
@@ -159,11 +168,12 @@ If something doesn’t fit cleanly into one of these, it probably doesn’t need
 agent-pack uses a small set of clear roles. You don’t need all of them all the time.
 
 Typical roles:
- • planner — backlog → plan, resolves ambiguities
- • researcher — explores unknowns, returns options + recommendation
- • builder — implements one task
- • reviewer — sanity-checks outputs and checks
- • scribe — keeps docs clean and consistent
+
+- planner — backlog → plan, resolves ambiguities
+- researcher — explores unknowns, returns options + recommendation
+- builder — implements one task
+- reviewer — sanity-checks outputs and checks
+- scribe — keeps docs clean and consistent
 
 The important part is not the agents themselves, but that each role has a strict output contract.
 
@@ -172,10 +182,11 @@ The important part is not the agents themselves, but that each role has a strict
 ## Output contracts (why this stays lightweight)
 
 Every command and agent produces structured output:
- • Files updated
- • Decisions made
- • Tasks created (if any)
- • Unknowns / required user input
+
+- Files updated
+- Decisions made
+- Tasks created (if any)
+- Unknowns / required user input
 
 This replaces heavy workflow rules with a simple question:
 
@@ -199,10 +210,10 @@ You can skip steps when appropriate. agent-pack is guidance, not a jail.
 
 ## What agent-pack deliberately does not do
 
- • No mandatory phases
- • No required agent swarms
- • No massive planning trees
- • No pretending long-term plans survive contact with reality
+- No mandatory phases
+- No required agent swarms
+- No massive planning trees
+- No pretending long-term plans survive contact with reality
 
 If you want those things, GSD is a great fit. agent-pack is for when you want to move fast without losing your footing.
 

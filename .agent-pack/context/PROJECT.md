@@ -16,9 +16,9 @@ If something is not here, it should not quietly become a requirement.
 
 What real problem are we solving?
 
- • Who experiences this problem?
- • Why does it matter now?
- • What happens if this project does not exist?
+- Who experiences this problem?
+- Why does it matter now?
+- What happens if this project does not exist?
 
 Keep this user- and outcome-focused, not solution-focused.
 
@@ -27,9 +27,10 @@ Keep this user- and outcome-focused, not solution-focused.
 ## Users & primary use cases
 
 List the primary users and what they are trying to accomplish.
- • User: <type / role>
- • Goal:
- • Success looks like:
+
+- User: <type / role>
+- Goal:
+- Success looks like:
 
 Add more users only if they materially change decisions.
 
@@ -38,8 +39,9 @@ Add more users only if they materially change decisions.
 ## Non-goals (explicitly out of scope)
 
 These are things people might reasonably assume are included — but are not.
- • <non-goal>
- • <non-goal>
+
+- `<non-goal>`
+- `<non-goal>`
 
 Non-goals are just as important as goals. Keep them current.
 
@@ -50,27 +52,30 @@ Non-goals are just as important as goals. Keep them current.
 Hard boundaries that plans must respect.
 
 Product
- • Scope limits:
- • Timeline / deadlines:
- • Budget or resource limits:
+
+- Scope limits:
+- Timeline / deadlines:
+- Budget or resource limits:
 
 Technical
- • Required technologies:
- • Forbidden technologies:
- • Performance or scalability constraints:
+
+- Required technologies:
+- Forbidden technologies:
+- Performance or scalability constraints:
 
 Operational / legal
- • Security or compliance requirements:
- • Data handling constraints:
- • Deployment or hosting constraints:
+
+- Security or compliance requirements:
+- Data handling constraints:
+- Deployment or hosting constraints:
 
 ⸻
 
 ## Success criteria
 
 This project is successful when the following are true and verifiable:
- •
- •
+
+- `<success criteria>`
 
 Avoid vague statements like “easy to use” unless paired with a checkable signal.
 
@@ -79,20 +84,22 @@ Avoid vague statements like “easy to use” unless paired with a checkable sig
 ## Stack (current or intended)
 
 This is descriptive, not aspirational. Update it when reality changes.
- • Frontend:
- • Backend:
- • Database:
- • Auth:
- • Infra / hosting:
- • Third-party services:
+
+- Frontend:
+- Backend:
+- Database:
+- Auth:
+- Infra / hosting:
+- Third-party services:
 
 ⸻
 
 ## Open questions
 
 Important unknowns that block confident planning.
- • <question>
- • <question>
+
+- `<question>`
+- `<question>`
 
 When an open question is answered, move the result to DECISIONS.md.
 
