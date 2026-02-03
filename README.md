@@ -10,16 +10,16 @@ If GSD feels powerful but heavy, agent-pack aims to feel small, fast, and obviou
 
 ## Core principles
 
- 1. Few durable truths
-Capture what must not drift (vision, constraints, decisions) once, and reuse it everywhere.
- 2. Small plans, small tasks
-Plans are rolling windows. Tasks are atomic and verifiable.
- 3. Decisions are first-class
-If something matters, write it down with a reason. If it might change tomorrow, don’t lock it.
- 4. Verification beats completion
-“Done” means checks pass, not “the agent said it’s finished.”
- 5. Lightweight by default
-Four commands. A handful of files. No mandatory phases, no agent swarm unless you want one.
+1. Few durable truths
+    - Capture what must not drift (vision, constraints, decisions) once, and reuse it everywhere.
+2. Small plans, small tasks
+    - Plans are rolling windows. Tasks are atomic and verifiable.
+3. Decisions are first-class
+   - If something matters, write it down with a reason. If it might change tomorrow, don’t lock it.
+4. Verification beats completion
+   - “Done” means checks pass, not “the agent said it’s finished.”
+5. Lightweight by default
+   - Four commands. A handful of files. No mandatory phases, no agent swarm unless you want one.
 
 ⸻
 

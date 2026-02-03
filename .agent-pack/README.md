@@ -50,7 +50,7 @@ Most work in this repo follows this loop:
 2. Plan the next step
     - /ap:plan
 3. Execute exactly one task
-    - /ap:do <task-id>
+    - /ap:do `<task-id>`
 4. Verify outcomes
     - /ap:check
 
