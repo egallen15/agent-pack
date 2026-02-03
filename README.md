@@ -27,30 +27,51 @@ Four commands. A handful of files. No mandatory phases, no agent swarm unless yo
 
 All agent-pack state lives in a single directory:
 
-.agent-pack/
-  README.md
-  ap.config.json        # optional knobs
-
-  context/              # durable truth
-    PROJECT.md          # what we’re building + constraints
-    DECISIONS.md        # durable decisions + rationale
-
-  work/                 # rolling working docs
-    BACKLOG.md          # problem-focused backlog
-    PLAN.md             # current executable plan
-    CHECKS.md           # acceptance & verification checks
-    STATUS.md           # current state + next actions
-
-  runs/                 # optional audit trail per command run
-    <timestamp>_<name>/
-      INPUT.md
-      OUTPUT.md
-      NOTES.md
-
-skills/
-  commands/             # command definitions (ap:init, ap:plan, ...)
-  agents/               # agent role definitions
-  references/           # shared rules & contracts
+```txt
+.
+├─ README.md                  # Project overview (humans)
+├─ AGENTS.md                  # Rules of engagement (agents)
+│
+├─ .agent-pack/
+│  ├─ README.md               # agent-pack operator manual
+│  ├─ ap.config.json          # optional config knobs
+│  │
+│  ├─ context/                # durable truth (rarely changes)
+│  │  ├─ PROJECT.md
+│  │  └─ DECISIONS.md
+│  │
+│  ├─ work/                   # rolling working surface
+│  │  ├─ BACKLOG.md
+│  │  ├─ PLAN.md
+│  │  ├─ CHECKS.md
+│  │  └─ STATUS.md
+│  │
+│  └─ runs/                   # execution evidence (gitignored or partial)
+│     └─ .gitkeep
+│
+├─ skills/
+│  ├─ commands/               # behavioral command contracts
+│  │  ├─ ap-init.md
+│  │  ├─ ap-plan.md
+│  │  ├─ ap-do.md
+│  │  └─ ap-check.md
+│  │
+│  ├─ agents/                 # agent role contracts
+│  │  ├─ planner.md
+│  │  ├─ researcher.md
+│  │  ├─ builder.md
+│  │  ├─ reviewer.md
+│  │  └─ scribe.md
+│  │
+│  └─ references/             # shared rules & enforcement
+│     ├─ output-contracts.md
+│     └─ planning-rules.md
+│
+├─ src/                       # your actual project code
+│  └─ ...
+│
+└─ .gitignore
+```
 
 You can commit everything except runs/ if you want a clean repo.
 
@@ -189,11 +210,6 @@ If you want those things, GSD is a great fit. agent-pack is for when you want to
 
 ## Status
 
-agent-pack is intentionally small and evolving.
+agent-pack is intentionally small and evolving. Simplicity is a feature.
 
 The README defines the philosophy and surface area. Everything else should earn its existence.
-
-Next steps typically:
- • Define command skills (skills/commands/*)
- • Define agent roles (skills/agents/*)
- • Tune templates based on real projects

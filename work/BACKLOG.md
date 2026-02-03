@@ -3,8 +3,6 @@
 This backlog is problem-focused, not a task list.
 If something already has a clear solution and steps, it probably belongs in PLAN.md instead.
 
-⸻
-
 ## How to use this backlog
 
  • Each item describes a problem worth solving, not an implementation.
