@@ -8,7 +8,7 @@ If something is not here, it should not quietly become a requirement.
 
 ## One-liner
 
-<Describe the project in one sentence. If this is unclear, everything else will drift.>
+`<Describe the project in one sentence. If this is unclear, everything else will drift.>`
 
 ⸻
 
