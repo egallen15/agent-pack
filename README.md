@@ -50,23 +50,34 @@ All agent-pack state lives in a single directory:
 │  └─ runs/                   # execution evidence (gitignored or partial)
 │     └─ .gitkeep
 │
-├─ skills/
-│  ├─ commands/               # behavioral command contracts
-│  │  ├─ ap-init.md
-│  │  ├─ ap-plan.md
-│  │  ├─ ap-do.md
-│  │  └─ ap-check.md
+├─ .github/
+│  └─ skills/                  # Agent Skills for VS Code (synced)
+│
+├─ .claude/
+│  └─ skills/                  # Agent Skills for Claude-style tools (synced)
+│
+├─ skills/                     # Agent Skills source of truth
+│  ├─ ap-init/
+│  │  └─ SKILL.md
+│  ├─ ap-plan/
+│  │  └─ SKILL.md
+│  ├─ ap-do/
+│  │  └─ SKILL.md
+│  ├─ ap-check/
+│  │  └─ SKILL.md
 │  │
-│  ├─ agents/                 # agent role contracts
+│  ├─ agents/                  # agent role contracts
 │  │  ├─ planner.md
 │  │  ├─ researcher.md
 │  │  ├─ builder.md
 │  │  ├─ reviewer.md
 │  │  └─ scribe.md
 │  │
-│  └─ references/             # shared rules & enforcement
+│  └─ references/              # shared rules & enforcement
 │     ├─ output-contracts.md
 │     └─ planning-rules.md
+│
+├─ scripts/                    # local tooling (sync, install)
 │
 ├─ src/                       # your actual project code
 │  └─ ...
@@ -76,11 +87,24 @@ All agent-pack state lives in a single directory:
 
 You can commit everything except runs/ if you want a clean repo.
 
+If you change skills in skills/, run `npm run sync-skills` to refresh the
+generated .github/skills and .claude/skills directories.
+
 ⸻
 
 ## The four commands
 
 agent-pack intentionally limits itself to four commands. These map loosely to discuss → plan → execute → verify, but with less ceremony.
+
+Agent Skills are the portable form of these command contracts. The canonical
+skills live in skills/ and are synced into .github/skills and .claude/skills for
+tool discovery.
+
+Quick install:
+
+```bash
+npx agent-pack
+```
 
 ### /ap:init — project grounding
 
@@ -226,3 +250,12 @@ If you want those things, GSD is a great fit. agent-pack is for when you want to
 agent-pack is intentionally small and evolving. Simplicity is a feature.
 
 The README defines the philosophy and surface area. Everything else should earn its existence.
+
+⸻
+
+## Publish to npm
+
+```bash
+npm login
+npm publish --access public
+```

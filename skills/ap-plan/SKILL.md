@@ -1,28 +1,33 @@
+---
+name: ap-plan
+description: Turn 1-3 backlog problems into a small executable plan with 1:1 checks. Use to define the next safe step with clear tasks and verification.
+---
+
 # /ap:plan
 
 ## Purpose
 
 Turn backlog problems into a small, executable plan with explicit checks.
 
-/ap:plan combines “discuss” + “plan” by forcing:
+/ap:plan combines "discuss" + "plan" by forcing:
 
 - surfaced decisions
 - tight tasks
 - check-first definition of done
 
-⸻
+---
 
 ## Inputs
 
 Any of the following:
 
 - Backlog IDs (e.g. B001 B003)
-- A goal statement (e.g. “plan the next best step”)
+- A goal statement (e.g. "plan the next best step")
 - Constraints or preferences (optional)
 
 If no backlog IDs are provided, select the best next problems from BACKLOG.md using PROJECT.md success criteria and current STATUS.
 
-⸻
+---
 
 ## Reads
 
@@ -38,12 +43,12 @@ May consult (if exists):
 - .agent-pack/work/PLAN.md
 - .agent-pack/work/CHECKS.md
 
-⸻
+---
 
 ## Process
 
 1. Select scope (small)
-   - Choose 1–3 backlog items max.
+   - Choose 1-3 backlog items max.
    - State why they are chosen now.
 2. Write the plan goal
    - A concrete state change.
@@ -52,7 +57,7 @@ May consult (if exists):
 4. Surface decisions needed
    - Identify ambiguity that could cause rework.
    - For each decision: list options + safe default + who must decide.
-5. Produce tasks (1–5)
+5. Produce tasks (1-5)
    - Each task must be atomic, executable, and bounded.
    - Each task must declare:
    - Scope boundary
@@ -67,7 +72,7 @@ May consult (if exists):
    - Set Current focus and Next 3 actions.
    - The first next action should usually be /ap:do T001.
 
-⸻
+---
 
 ## Output rules
 
@@ -76,7 +81,7 @@ May consult (if exists):
 - Prefer clarity over completeness.
 - If uncertainty is high, reduce plan scope rather than adding complexity.
 
-⸻
+---
 
 ## Output contract
 
@@ -84,23 +89,23 @@ May consult (if exists):
 <Output-Structure>
 ### Files updated
 
-- .agent-pack/work/PLAN.md — <summary>
-- .agent-pack/work/CHECKS.md — <summary>
-- .agent-pack/work/STATUS.md — <summary>
-- .agent-pack/context/DECISIONS.md — <summary if changed>
+- .agent-pack/work/PLAN.md -- <summary>
+- .agent-pack/work/CHECKS.md -- <summary>
+- .agent-pack/work/STATUS.md -- <summary>
+- .agent-pack/context/DECISIONS.md -- <summary if changed>
 
 ### Decisions made
 
-- DN###: <decision needed> — <options + default>
+- DN###: <decision needed> -- <options + default>
 - D###/P###: <any durable decision added>
 
 ### Tasks created or modified
 
-- T###: <task> — check: C###
+- T###: <task> -- check: C###
 
 ### Checks created or affected
 
-- C###: <check> — task: T###
+- C###: <check> -- task: T###
 
 ### Unknowns / needs input
 
@@ -109,7 +114,7 @@ May consult (if exists):
 </Output-Structure>
 ```
 
-⸻
+---
 
 ## Completion criteria
 
@@ -119,14 +124,14 @@ May consult (if exists):
 - a plan goal
 - context snapshot
 - decisions needed (may be empty)
-- 1–5 tasks
+- 1-5 tasks
 - out-of-scope list
 - CHECKS.md contains exactly one check per task
 - STATUS.md next actions point to executing the plan
 
 If any of these are missing, the command must report it.
 
-⸻
+---
 
 ## Common failure modes
 
@@ -136,7 +141,7 @@ If any of these are missing, the command must report it.
 - Hiding decisions inside tasks
 - Planning implementation without stating the problem being solved
 
-⸻
+---
 
 ## Notes
 

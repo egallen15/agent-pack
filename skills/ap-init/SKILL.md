@@ -1,3 +1,8 @@
+---
+name: ap-init
+description: Initialize or re-ground a project by creating durable truth files (PROJECT.md, DECISIONS.md, PROGRESS.md, BACKLOG.md, STATUS.md). Use when starting new work or when scope has drifted.
+---
+
 # /ap:init
 
 ## Purpose
@@ -6,15 +11,15 @@ Initialize (or re-ground) a project using agent-pack.
 
 This command creates the durable truth set and the initial working surface:
 
-- PROJECT.md (what we’re building)
+- PROJECT.md (what we're building)
 - DECISIONS.md (durable decisions)
 - PROGRESS.md (completed work and learnings)
 - BACKLOG.md (problem list)
-- STATUS.md (what’s happening next)
+- STATUS.md (what's happening next)
 
 Use /ap:init when starting a new repo or when scope has drifted.
 
-⸻
+---
 
 ## Inputs
 
@@ -28,7 +33,7 @@ Provide as much as you can. Rough notes are fine.
 
 If inputs are missing, this command must surface them as Unknowns / needs input.
 
-⸻
+---
 
 ## Reads
 
@@ -42,7 +47,7 @@ Must consult the following if they exist:
 
 If these do not exist, create them from templates.
 
-⸻
+---
 
 ## Process
 
@@ -53,18 +58,18 @@ If these do not exist, create them from templates.
    - Identify non-goals
    - Identify constraints
 3. Define success criteria
-   - Produce 2–6 checkable success criteria.
+   - Produce 2-6 checkable success criteria.
 4. Seed decisions
    - Record any obvious durable decisions as Locked.
    - Record unresolved forks as Pending.
 5. Seed the backlog
-   - Produce 3–10 problem statements.
+   - Produce 3-10 problem statements.
    - Keep them problem-first, not solution-first.
 6. Set immediate next actions
    - Update STATUS.md with current focus + next 3 actions.
    - Prefer actions that lead naturally to /ap:plan.
 
-⸻
+---
 
 ## Output rules
 
@@ -73,7 +78,7 @@ If these do not exist, create them from templates.
 - Do not invent requirements.
 - If uncertain, explicitly mark assumptions.
 
-⸻
+---
 
 ## Output contract
 
@@ -81,11 +86,11 @@ If these do not exist, create them from templates.
 
 ### Files updated
 
-- .agent-pack/context/PROJECT.md — <summary>
-- .agent-pack/context/DECISIONS.md — <summary>
-- .agent-pack/context/PROGRESS.md — <summary>
-- .agent-pack/work/BACKLOG.md — <summary>
-- .agent-pack/work/STATUS.md — <summary>
+- .agent-pack/context/PROJECT.md -- <summary>
+- .agent-pack/context/DECISIONS.md -- <summary>
+- .agent-pack/context/PROGRESS.md -- <summary>
+- .agent-pack/work/BACKLOG.md -- <summary>
+- .agent-pack/work/STATUS.md -- <summary>
 
 ### Decisions made
 
@@ -105,7 +110,7 @@ If these do not exist, create them from templates.
 
 ```
 
-⸻
+---
 
 ## Completion criteria
 
@@ -119,19 +124,19 @@ If these do not exist, create them from templates.
 
 If any of the above are missing, the command must report it.
 
-⸻
+---
 
 ## Common failure modes
 
 - Writing tasks instead of problems (belongs in PLAN.md)
 - Missing non-goals (scope creep risk)
-- Vague success criteria (“easy”, “fast”, “robust” without signals)
+- Vague success criteria ("easy", "fast", "robust" without signals)
 - Silent assumptions instead of explicit unknowns
 
-⸻
+---
 
 ## Notes
 
 /ap:init should feel fast.
 
-If this command becomes long or painful, it is a signal that the project definition is unclear — not that more process is needed.
+If this command becomes long or painful, it is a signal that the project definition is unclear -- not that more process is needed.

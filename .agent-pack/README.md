@@ -103,6 +103,22 @@ If a command’s output does not match its contract, the command is incomplete.
 
 ⸻
 
+## Agent Skills
+
+Agent Skills are the portable version of these command contracts. The canonical
+skills live in `skills/` at the repo root. Generated copies are kept in
+`.github/skills/` (VS Code) and `.claude/skills/` so tools can discover them
+without extra configuration, and these generated directories are committed. When
+you update skills, run `npm run sync-skills` to refresh them.
+
+Quick install:
+
+```bash
+npx agent-pack
+```
+
+⸻
+
 ## Agent roles
 
 Agents operate under explicit roles:

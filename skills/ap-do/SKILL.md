@@ -1,3 +1,8 @@
+---
+name: ap-do
+description: Execute exactly one task from the active plan, update status, and record evidence. Use when a single task with a defined check is ready to build.
+---
+
 # /ap:do
 
 ## Purpose
@@ -7,7 +12,7 @@ Execute one task from the current plan.
 /ap:do is intentionally narrow: it builds a single task, updates status, and records what happened.
 If more than one task is executed, the command has failed.
 
-⸻
+---
 
 ## Inputs
 
@@ -17,11 +22,11 @@ Required:
 
 Optional:
 
-- Notes or constraints (e.g. “prioritize correctness over speed”)
+- Notes or constraints (e.g. "prioritize correctness over speed")
 
 If no task ID is provided, pick the next incomplete task from the PLAN.md.
 
-⸻
+---
 
 ## Reads
 
@@ -39,7 +44,7 @@ May consult:
 - Repo source code
 - Relevant runs/ history
 
-⸻
+---
 
 ## Process
 
@@ -61,11 +66,11 @@ May consult:
    - Record inputs, outputs, and notes.
 6. Update status
    - Mark progress in STATUS.md.
-   - Update “Recent changes” with a pointer to the run.
+   - Update "Recent changes" with a pointer to the run.
 7. Append progress log
    - Add a dated entry to PROGRESS.md with a short summary and any learnings.
 
-⸻
+---
 
 ## Output rules
 
@@ -74,15 +79,15 @@ May consult:
 - Prefer correctness and clarity over cleverness.
 - If the task reveals a missing decision, stop and report it.
 
-⸻
+---
 
 ## Output contract
 
 ```md
 ### Files updated
 
-- <file path> — <what changed>
-- .agent-pack/context/PROGRESS.md — <progress entry>
+- <file path> -- <what changed>
+- .agent-pack/context/PROGRESS.md -- <progress entry>
 
 ### Decisions made
 
@@ -90,24 +95,24 @@ May consult:
 
 ### Tasks created or modified
 
-- T### — <status update or note>
+- T### -- <status update or note>
 
 ### Checks created or affected
 
-- C### — <result or notes>
+- C### -- <result or notes>
 
 ### Unknowns / needs input
 
 - <questions or blockers>
 ```
 
-⸻
+---
 
 ## Completion criteria
 
 /ap:do is complete when:
 
-- The task’s done-when condition is satisfied
+- The task's done-when condition is satisfied
 - The associated check can be run
 - STATUS.md reflects the new state
 - A run record exists under runs/
@@ -115,7 +120,7 @@ May consult:
 
 If the task cannot be completed, the command must report why.
 
-⸻
+---
 
 ## Common failure modes
 
@@ -125,7 +130,7 @@ If the task cannot be completed, the command must report why.
 - Creating new checks mid-execution
 - Forgetting to update STATUS.md
 
-⸻
+---
 
 ## Notes
 

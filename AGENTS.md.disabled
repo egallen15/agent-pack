@@ -22,6 +22,9 @@ All work must follow these commands:
 
 Do not invent new workflows.
 
+Command definitions live as Agent Skills under skills/ and are synced into
+.github/skills and .claude/skills for tool discovery.
+
 ## Rules
 
 - Follow OUTPUT CONTRACTS
