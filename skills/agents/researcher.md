@@ -12,6 +12,7 @@ Reduce uncertainty by evaluating options and making a recommendation.
 
 - PROJECT.md
 - DECISIONS.md
+- PROGRESS.md
 - PLAN.md (especially Decisions needed)
 - Relevant code/docs (if available)
 

@@ -33,9 +33,10 @@ When instructions or information conflict, resolve them in this order:
 3. work/PLAN.md — current executable intent
 4. work/CHECKS.md — how success is verified
 5. work/STATUS.md — current state and next actions
-6. work/BACKLOG.md — future problems to solve
-7. runs/ — evidence and execution history
-8. Chat or ad-hoc discussion — lowest authority
+6. context/PROGRESS.md — append-only log of completed work and learnings
+7. work/BACKLOG.md — future problems to solve
+8. runs/ — evidence and execution history
+9. Chat or ad-hoc discussion — lowest authority
 
 Never violate higher truth to satisfy lower truth.
 
@@ -68,6 +69,8 @@ Durable truth
 - Problem, users, constraints, success criteria
 - context/DECISIONS.md
 - Locked, pending, and reversed decisions
+- context/PROGRESS.md
+- Append-only log of completed work and learnings
 
 ## Working documents
 
@@ -159,6 +162,7 @@ These are signals to adjust process, not push harder.
 ## How to recover
 
 - Confusion → reread PROJECT.md and DECISIONS.md
+- Lost context → skim PROGRESS.md
 - Scope creep → shrink PLAN.md
 - Repeated failures → improve task boundaries or checks
 - Drift → run /ap:init again

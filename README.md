@@ -38,7 +38,8 @@ All agent-pack state lives in a single directory:
 │  │
 │  ├─ context/                # durable truth (rarely changes)
 │  │  ├─ PROJECT.md
-│  │  └─ DECISIONS.md
+│  │  ├─ DECISIONS.md
+│  │  └─ PROGRESS.md
 │  │
 │  ├─ work/                   # rolling working surface
 │  │  ├─ BACKLOG.md
@@ -158,6 +159,7 @@ You don’t need to remember every file. Just remember what kind of truth each o
 - PLAN.md → What are we doing next, exactly?
 - CHECKS.md → How do we know it worked?
 - STATUS.md → Where are we right now?
+- PROGRESS.md → What was completed and learned (append-only)
 
 If something doesn’t fit cleanly into one of these, it probably doesn’t need its own file.
 

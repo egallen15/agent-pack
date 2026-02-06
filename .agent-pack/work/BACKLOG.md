@@ -11,8 +11,6 @@ If something already has a clear solution and steps, it probably belongs in PLAN
 
 If the backlog grows large, that’s fine. Only a few items should ever be in active planning.
 
-⸻
-
 ## Now
 
 Problems that are most valuable to address next.
@@ -28,16 +26,12 @@ Problems that are most valuable to address next.
   - Impact if solved:
   - Notes / constraints:
 
-⸻
-
 ## Later
 
 Problems that are real, but not worth tackling yet.
 
 - B010 —
   - Notes:
-
-⸻
 
 ## Icebox
 
@@ -47,8 +41,6 @@ Ideas or problems that might never be addressed.
 
 Keeping an icebox reduces pressure to act on every idea.
 
-⸻
-
 ## Recently completed
 
 Problems that have been sufficiently addressed.
@@ -57,15 +49,11 @@ Problems that have been sufficiently addressed.
 - Outcome:
 - Date completed:
 
-⸻
-
 ## Backlog hygiene
 
 - If an item repeatedly stalls planning, it probably hides a missing decision.
 - If an item keeps spawning many tasks, consider splitting the problem.
 - If an item hasn’t been relevant for a long time, move it to the icebox.
-
-⸻
 
 ## Last updated
 

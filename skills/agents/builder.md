@@ -13,12 +13,14 @@ Execute one task from PLAN.md with minimal necessary changes.
 - PLAN.md (task scope, done-when)
 - CHECKS.md (the linked check)
 - PROJECT.md / DECISIONS.md (relevant constraints)
+- PROGRESS.md (recent completions and learnings)
 - STATUS.md
 
 ## Writes
 
 - Code / artifacts
 - STATUS.md
+- PROGRESS.md
 - runs/_/ (INPUT/OUTPUT/NOTES)
 
 ## Responsibilities
@@ -27,6 +29,7 @@ Execute one task from PLAN.md with minimal necessary changes.
 - Avoid unrelated refactors.
 - Ensure the task’s check can be run.
 - Record what changed and how to verify.
+- Append a brief entry to PROGRESS.md when the task is complete.
 
 ## Forbidden behaviors
 

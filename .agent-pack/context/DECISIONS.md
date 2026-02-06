@@ -5,8 +5,6 @@ If a decision would change tomorrow, it does not belong here.
 
 When plans or tasks feel confusing, check this file first.
 
-⸻
-
 ## How to use this file
 
 - Record what was decided, why, and when.
@@ -15,48 +13,32 @@ When plans or tasks feel confusing, check this file first.
 
 This file should stay readable months later.
 
-⸻
-
 ## Locked decisions
 
 Decisions that are unlikely to change and should be treated as constraints.
 
-- D001 —
-  - Reason:
-  - Implications:
-  - Date:
-- D002 —
-  - Reason:
-  - Implications:
-  - Date:
-
-⸻
+| ID | Decision | Reason | Implications | Date |
+| --- | --- | --- | --- | --- |
+| D001 | — |  |  |  |
+| D002 | — |  |  |  |
 
 ## Reversed decisions
 
 Decisions that were once locked but later changed.
 
-- RD001 —
-  - Replaced by:
-  - Reason for change:
-  - Date:
-
-⸻
+| ID | Replaced by | Reason for change | Date |
+| --- | --- | --- | --- |
+| RD001 |  |  |  |
 
 ## Pending decisions
 
 Open decisions that block or influence planning.
 
-- P001 —
-- Options:
-- A:
-- B:
-- Recommendation: <agent / user suggestion>
-- Needs input from:
+| ID | Decision | Options | Recommendation | Needs input from |
+| --- | --- | --- | --- | --- |
+| P001 | — | A: ; B:  | <agent / user suggestion> |  |
 
 Pending decisions should either be resolved or consciously deferred.
-
-⸻
 
 ## Decision principles (optional)
 
@@ -69,8 +51,6 @@ Examples:
 - Avoid introducing new infrastructure unless required.
 
 Keep this short. If it grows large, it’s probably a smell.
-
-⸻
 
 ## Last updated
 

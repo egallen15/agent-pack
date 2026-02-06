@@ -8,6 +8,7 @@ This command creates the durable truth set and the initial working surface:
 
 - PROJECT.md (what we’re building)
 - DECISIONS.md (durable decisions)
+- PROGRESS.md (completed work and learnings)
 - BACKLOG.md (problem list)
 - STATUS.md (what’s happening next)
 
@@ -35,6 +36,7 @@ Must consult the following if they exist:
 
 - .agent-pack/context/PROJECT.md
 - .agent-pack/context/DECISIONS.md
+- .agent-pack/context/PROGRESS.md
 - .agent-pack/work/BACKLOG.md
 - .agent-pack/work/STATUS.md
 
@@ -81,6 +83,7 @@ If these do not exist, create them from templates.
 
 - .agent-pack/context/PROJECT.md — <summary>
 - .agent-pack/context/DECISIONS.md — <summary>
+- .agent-pack/context/PROGRESS.md — <summary>
 - .agent-pack/work/BACKLOG.md — <summary>
 - .agent-pack/work/STATUS.md — <summary>
 
@@ -110,6 +113,7 @@ If these do not exist, create them from templates.
 
 - PROJECT.md has a clear one-liner, users, non-goals, constraints, and success criteria
 - DECISIONS.md contains at least one item (Locked or Pending)
+- PROGRESS.md exists (may contain only the template)
 - BACKLOG.md has at least 3 meaningful problem statements
 - STATUS.md has a current focus and 3 next actions
 

@@ -9,6 +9,7 @@ Before doing any work:
 1. Read `.agent-pack/README.md`
 2. Read `.agent-pack/context/PROJECT.md`
 3. Read `.agent-pack/context/DECISIONS.md`
+4. Read `.agent-pack/context/PROGRESS.md`
 
 ## How to work in this repo
 
@@ -31,6 +32,7 @@ Do not invent new workflows.
 ## Where truth lives
 
 - Project truth: `.agent-pack/context/*`
+- Progress log: `.agent-pack/context/PROGRESS.md`
 - Plans & status: `.agent-pack/work/*`
 - Evidence: `.agent-pack/runs/*`
 

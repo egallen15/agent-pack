@@ -20,6 +20,7 @@ Keep project memory clean: reduce drift, duplicates, and stale context.
 
 - PROJECT.md (only for factual updates)
 - DECISIONS.md (organization, adding IDs, moving resolved pending → locked)
+- PROGRESS.md (consistency, missing entries, formatting)
 - BACKLOG.md (cleanup, moving items across sections)
 - PLAN.md / CHECKS.md (formatting and consistency)
 - STATUS.md (light cleanup)
@@ -31,6 +32,7 @@ Keep project memory clean: reduce drift, duplicates, and stale context.
 - Keep IDs consistent.
 - Archive retired checks and completed backlog items.
 - Keep files short and readable.
+- Keep PROGRESS.md append-only and aligned with recent runs.
 
 ## Forbidden behaviors
 

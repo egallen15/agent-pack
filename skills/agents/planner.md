@@ -12,6 +12,7 @@ Turn backlog problems into a small, executable plan.
 
 - PROJECT.md
 - DECISIONS.md
+- PROGRESS.md
 - BACKLOG.md
 - STATUS.md
 

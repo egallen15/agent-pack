@@ -32,6 +32,7 @@ Must consult:
 - .agent-pack/work/STATUS.md
 - .agent-pack/context/PROJECT.md
 - .agent-pack/context/DECISIONS.md
+- .agent-pack/context/PROGRESS.md
 
 May consult:
 
@@ -61,6 +62,8 @@ May consult:
 6. Update status
    - Mark progress in STATUS.md.
    - Update “Recent changes” with a pointer to the run.
+7. Append progress log
+   - Add a dated entry to PROGRESS.md with a short summary and any learnings.
 
 ⸻
 
@@ -79,6 +82,7 @@ May consult:
 ### Files updated
 
 - <file path> — <what changed>
+- .agent-pack/context/PROGRESS.md — <progress entry>
 
 ### Decisions made
 
@@ -107,6 +111,7 @@ May consult:
 - The associated check can be run
 - STATUS.md reflects the new state
 - A run record exists under runs/
+- PROGRESS.md records the completed work
 
 If the task cannot be completed, the command must report why.
 
