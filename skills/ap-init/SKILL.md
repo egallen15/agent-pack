@@ -23,7 +23,7 @@ Use /ap:init when starting a new repo or when scope has drifted.
 
 ## Inputs
 
-Provide as much as you can. Rough notes are fine.
+Start a conversation with the user to gather as much as you can. Rough notes are fine, but we can't produce final content without clarity.
 
 - Project idea / description
 - Target users
@@ -31,7 +31,7 @@ Provide as much as you can. Rough notes are fine.
 - Preferred stack (optional)
 - Non-goals (what we are not doing)
 
-If inputs are missing, this command must surface them as Unknowns / needs input.
+If inputs are missing, this command must surface them as Unknowns / needs input. If the user cannot provide them, make assumptions but mark them clearly. Ask follow-up questions to clarify vague or incomplete inputs, and iterate until you have enough to proceed. Check with the user before finalizing the output.
 
 ---
 
