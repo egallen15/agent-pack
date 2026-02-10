@@ -23,7 +23,7 @@ Use /ap:init when starting a new repo or when scope has drifted.
 
 ## Inputs
 
-Provide as much as you can. Rough notes are fine.
+Provide as much context as you can. Rough notes are fine.
 
 - Project idea / description
 - Target users
