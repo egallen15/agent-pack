@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "researcher",
+  "name": "Researcher",
+  "include": ["core", "module:research"],
+  "agents": {
+    "agentsMdTemplate": "# AGENTS.md\n\nThis repository uses the Agent-Pack Researcher loadout.\n\n## Default behavior\n- Prioritize evidence and source-backed recommendations.\n- Keep plans small and decision-complete.\n"
+  }
+}

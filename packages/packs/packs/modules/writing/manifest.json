@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "writing",
+  "name": "Writing",
+  "version": "0.1.0",
+  "description": "Writing and documentation guidance",
+  "type": "capability",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}

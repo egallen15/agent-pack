@@ -1,0 +1,9 @@
+{
+  "name": "@agentpack/packs",
+  "version": "0.1.0",
+  "description": "Official Agent-Pack modules and loadouts",
+  "license": "MIT",
+  "files": [
+    "packs/"
+  ]
+}
