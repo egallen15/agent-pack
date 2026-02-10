@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const DEFAULT_TARGETS = [".github/skills", ".claude/skills"];
+const DEFAULT_TARGETS = [".github/skills", ".claude/skills", ".codex/skills"];
 
 function listSkillDirs(sourceRoot) {
   if (!fs.existsSync(sourceRoot)) {

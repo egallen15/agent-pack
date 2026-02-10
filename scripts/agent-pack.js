@@ -7,13 +7,14 @@ const { syncSkills, DEFAULT_TARGETS } = require("./sync-skills");
 function printHelp() {
   console.log("agent-pack\n");
   console.log("Usage:");
-  console.log("  agent-pack install [--vscode] [--claude] [--all] [--force] (default)");
-  console.log("  agent-pack sync-skills [--vscode] [--claude] [--all] [--source <path>]");
+  console.log("  agent-pack install [--vscode] [--claude] [--codex] [--all] [--force] (default)");
+  console.log("  agent-pack sync-skills [--vscode] [--claude] [--codex] [--all] [--source <path>]");
   console.log("");
   console.log("Options:");
   console.log("  --vscode   Sync to .github/skills only");
   console.log("  --claude   Sync to .claude/skills only");
-  console.log("  --all      Sync to both .github/skills and .claude/skills (default)");
+  console.log("  --codex    Sync to .codex/skills only");
+  console.log("  --all      Sync to .github/skills, .claude/skills, and .codex/skills (default)");
   console.log("  --source   Source skills directory (default: ./skills)");
   console.log("  --force    Overwrite existing files during install");
 }
@@ -39,6 +40,9 @@ function parseArgs(argv) {
   }
   if (hasFlag("--claude")) {
     targets.push(".claude/skills");
+  }
+  if (hasFlag("--codex")) {
+    targets.push(".codex/skills");
   }
 
   return {
