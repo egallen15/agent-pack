@@ -27,6 +27,7 @@ Keep this user- and outcome-focused, not solution-focused.
 ## Users & primary use cases
 
 List the primary users and what they are trying to accomplish.
+Keep this section high-level; put detailed segments, flows, and success signals in `USERS.md`.
 
 - User: <type / role>
 - Goal:
@@ -68,6 +69,8 @@ Operational / legal
 - Security or compliance requirements:
 - Data handling constraints:
 - Deployment or hosting constraints:
+
+Keep this section high-level; put detailed security posture, controls, and open risks in `SECURITY.md`.
 
 ⸻
 

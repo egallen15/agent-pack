@@ -40,6 +40,8 @@ Must consult:
 
 May consult (if exists):
 
+- .agent-pack/context/USERS.md (when planning user-facing behavior or UX-impacting changes)
+- .agent-pack/context/SECURITY.md (when planning auth, data handling, or compliance-sensitive work)
 - .agent-pack/work/PLAN.md
 - .agent-pack/work/CHECKS.md
 
@@ -54,6 +56,7 @@ May consult (if exists):
    - A concrete state change.
 3. Create a context snapshot
    - Pull only the constraints/decisions relevant to this plan.
+   - Consult USERS.md and SECURITY.md when they are relevant to scope.
 4. Surface decisions needed
    - Identify ambiguity that could cause rework.
    - For each decision: list options + safe default + who must decide.

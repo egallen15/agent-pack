@@ -39,6 +39,8 @@ All agent-pack state lives in a single directory:
 │  ├─ context/                # durable truth (rarely changes)
 │  │  ├─ PROJECT.md
 │  │  ├─ DECISIONS.md
+│  │  ├─ USERS.md
+│  │  ├─ SECURITY.md
 │  │  └─ PROGRESS.md
 │  │
 │  ├─ work/                   # rolling working surface
@@ -119,6 +121,8 @@ Produces / updates:
 
 - context/PROJECT.md
 - context/DECISIONS.md
+- context/USERS.md (when user-context details materially shape planning)
+- context/SECURITY.md (when security constraints are relevant)
 - work/BACKLOG.md
 - work/STATUS.md
 
@@ -179,6 +183,8 @@ You don’t need to remember every file. Just remember what kind of truth each o
 
 - PROJECT.md → What is this? Who is it for? What constraints matter?
 - DECISIONS.md → What have we locked in, and why?
+- USERS.md → Which user segments matter most, their JTBD, and how success is measured?
+- SECURITY.md → What security baseline and risk boundaries must plans respect?
 - BACKLOG.md → What problems are worth solving?
 - PLAN.md → What are we doing next, exactly?
 - CHECKS.md → How do we know it worked?

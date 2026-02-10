@@ -30,13 +30,15 @@ When instructions or information conflict, resolve them in this order:
 
 1. context/PROJECT.md — what we’re building and why
 2. context/DECISIONS.md — durable decisions and constraints
-3. work/PLAN.md — current executable intent
-4. work/CHECKS.md — how success is verified
-5. work/STATUS.md — current state and next actions
-6. context/PROGRESS.md — append-only log of completed work and learnings
-7. work/BACKLOG.md — future problems to solve
-8. runs/ — evidence and execution history
-9. Chat or ad-hoc discussion — lowest authority
+3. context/USERS.md — durable user segments, goals, and success signals
+4. context/SECURITY.md — security posture, controls, and open risks
+5. work/PLAN.md — current executable intent
+6. work/CHECKS.md — how success is verified
+7. work/STATUS.md — current state and next actions
+8. context/PROGRESS.md — append-only log of completed work and learnings
+9. work/BACKLOG.md — future problems to solve
+10. runs/ — evidence and execution history
+11. Chat or ad-hoc discussion — lowest authority
 
 Never violate higher truth to satisfy lower truth.
 
@@ -69,6 +71,10 @@ Durable truth
 - Problem, users, constraints, success criteria
 - context/DECISIONS.md
 - Locked, pending, and reversed decisions
+- context/USERS.md
+- User segments, critical flows, and success signals
+- context/SECURITY.md
+- Security baseline, threat assumptions, and controls
 - context/PROGRESS.md
 - Append-only log of completed work and learnings
 
@@ -178,6 +184,8 @@ These are signals to adjust process, not push harder.
 ## How to recover
 
 - Confusion → reread PROJECT.md and DECISIONS.md
+- User ambiguity → review USERS.md
+- Security ambiguity → review SECURITY.md
 - Lost context → skim PROGRESS.md
 - Scope creep → shrink PLAN.md
 - Repeated failures → improve task boundaries or checks
