@@ -12,8 +12,21 @@ If this file gets large or vague, the plan is too big.
 - Plans are created via /ap:plan and consumed via /ap:do.
 - A plan should cover days, not weeks.
 - Each task must be small, explicit, and verifiable.
+- Plans may span one or more milestones when that is the smallest coherent scope.
 
 When the plan is complete or stale, replace it with a new one.
+
+⸻
+
+## Scope links (recommended)
+
+Link this plan back to the backlog for traceability.
+
+- Active milestones: <M01> or <M01, M02>
+- Backlog items in scope: <B001, B003>
+- Why this scope shape: <why this is one milestone or cross-milestone>
+
+This is guidance, not strict schema. Keep references clear and readable.
 
 ⸻
 
@@ -57,11 +70,13 @@ If a decision becomes durable, promote it to DECISIONS.md.
 Each task should be executable in isolation.
 
 - T001 —
+  - Source backlog item: <B001>
   - Scope:
   - Touches: <files / areas>
   - Done when:
   - Check: C001
 - T002 —
+  - Source backlog item: <B001 or B003>
   - Scope:
   - Touches:
   - Done when:
@@ -71,6 +86,7 @@ Guidelines:
 
 - Prefer 1–5 tasks per plan.
 - If a task includes “and then…”, split it.
+- Keep task/check IDs traceable, but exact format is repo convention.
 
 ⸻
 

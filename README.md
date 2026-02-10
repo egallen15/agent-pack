@@ -131,6 +131,8 @@ Produces / updates:
 ### /ap:plan — discuss + plan
 
 Turns 1–3 backlog items into a small, executable plan.
+By default, pick the smallest coherent scope. This may be one milestone or
+multiple milestones when cross-milestone scope is the clearest delivery path.
 
 When to use:
 
@@ -186,7 +188,7 @@ You don’t need to remember every file. Just remember what kind of truth each o
 - USERS.md → Which user segments matter most, their JTBD, and how success is measured?
 - SECURITY.md → What security baseline and risk boundaries must plans respect?
 - BACKLOG.md → What problems are worth solving?
-- PLAN.md → What are we doing next, exactly?
+- PLAN.md → What are we doing next, exactly (and which milestone/backlog items does it map to)?
 - CHECKS.md → How do we know it worked?
 - STATUS.md → Where are we right now?
 - PROGRESS.md → What was completed and learned (append-only)

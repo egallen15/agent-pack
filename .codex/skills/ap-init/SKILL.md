@@ -13,7 +13,7 @@ This command creates the durable truth set and the initial working surface:
 
 - PROJECT.md (what we're building)
 - DECISIONS.md (durable decisions)
-- USERS.md (durable user segments, goals, and success signals)
+- USERS.md (durable user segments, JTBD, goals, and success signals)
 - SECURITY.md (security posture, constraints, and baseline controls)
 - PROGRESS.md (completed work and learnings)
 - BACKLOG.md (problem list)
@@ -58,7 +58,7 @@ If these do not exist, create them from templates.
 1. Clarify the one-liner
    - Produce a one-sentence description that can be repeated later.
 2. Extract scope shape
-   - Identify users + top use cases
+   - Identify users + JTBD + top use cases
    - Identify non-goals
    - Identify constraints
    - Populate USERS.md and SECURITY.md when those contexts materially affect planning
@@ -70,6 +70,8 @@ If these do not exist, create them from templates.
 5. Seed the backlog
    - Produce 3-10 problem statements.
    - Keep them problem-first, not solution-first.
+   - Milestone grouping is recommended when helpful, but not required.
+   - If project shape is still uncertain, a flat backlog is acceptable.
 6. Set immediate next actions
    - Update STATUS.md with current focus + next 3 actions.
    - Prefer actions that lead naturally to /ap:plan.

@@ -70,6 +70,8 @@ If these do not exist, create them from templates.
 5. Seed the backlog
    - Produce 3-10 problem statements.
    - Keep them problem-first, not solution-first.
+   - Milestone grouping is recommended when helpful, but not required.
+   - If project shape is still uncertain, a flat backlog is acceptable.
 6. Set immediate next actions
    - Update STATUS.md with current focus + next 3 actions.
    - Prefer actions that lead naturally to /ap:plan.

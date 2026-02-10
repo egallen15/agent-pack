@@ -10,6 +10,7 @@ If a task does not have a check, it is not complete.
 - Each check maps to exactly one task in PLAN.md.
 - Checks should be observable and repeatable.
 - Prefer outcome-based checks over implementation details.
+- Keep check IDs traceable to task IDs, using repo conventions.
 
 A good check can be run by a human or an agent without extra interpretation.
 
@@ -36,6 +37,11 @@ Checks for the current plan.
   - Expected result:
   - Status: ☐ not run / ☐ pass / ☐ fail
   - Evidence:
+
+ID note:
+
+- IDs are intentionally flexible (e.g. C001, C-M01-02, C-auth-smoke).
+- Prefer formats that make traceability obvious to the current plan.
 
 ⸻
 

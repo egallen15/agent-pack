@@ -49,6 +49,7 @@ May consult:
 1. Select checks
     - Resolve input into a concrete list of checks.
     - Only checks from the active plan may be run.
+    - Preserve traceability between each check ID and task ID using repo conventions.
 2. Re-read intent
      - Review the task's done-when condition and plan goal.
 3. Run the check

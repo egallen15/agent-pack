@@ -18,7 +18,7 @@ If more than one task is executed, the command has failed.
 
 Required:
 
-- A task ID from PLAN.md (e.g. T001)
+- A task ID from PLAN.md (e.g. T001 or another repo-convention ID)
 
 Optional:
 
@@ -51,6 +51,7 @@ May consult:
 1. Validate the task
    - Confirm the task exists and is in the active plan.
    - Confirm the task has exactly one associated check.
+   - Confirm task/check IDs are traceable under the repo's conventions.
 2. Reconstruct intent
    - Re-read task scope, done-when condition, and related decisions.
    - If intent is unclear, stop and report an unknown.

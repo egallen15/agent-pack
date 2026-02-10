@@ -1,6 +1,6 @@
 ---
 name: ap-plan
-description: Turn 1-3 backlog problems into a small executable plan with 1:1 checks. Use to define the next safe step with clear tasks and verification.
+description: Turn 1-3 backlog problems into a small executable plan with 1:1 checks. Use to define the next safe step with clear tasks and verification, including multi-milestone scope when useful.
 ---
 
 # /ap:plan
@@ -22,6 +22,7 @@ Turn backlog problems into a small, executable plan with explicit checks.
 Any of the following:
 
 - Backlog IDs (e.g. B001 B003)
+- Milestone IDs (e.g. M01, or M01 M02 when cross-milestone planning is justified)
 - A goal statement (e.g. "plan the next best step")
 - Constraints or preferences (optional)
 
@@ -40,7 +41,7 @@ Must consult:
 
 May consult (if exists):
 
-- .agent-pack/context/USERS.md (when planning user-facing behavior or UX-impacting changes)
+- .agent-pack/context/USERS.md (JTBD, goals, and success signals for user-facing work)
 - .agent-pack/context/SECURITY.md (when planning auth, data handling, or compliance-sensitive work)
 - .agent-pack/work/PLAN.md
 - .agent-pack/work/CHECKS.md
@@ -51,6 +52,9 @@ May consult (if exists):
 
 1. Select scope (small)
    - Choose 1-3 backlog items max.
+   - Prefer the smallest coherent scope.
+   - It is valid to plan across multiple milestones when dependencies or value justify it.
+   - If planning across milestones, state why.
    - State why they are chosen now.
 2. Write the plan goal
    - A concrete state change.
@@ -104,11 +108,11 @@ May consult (if exists):
 
 ### Tasks created or modified
 
-- T###: <task> -- check: C###
+- <task-id>: <task> -- check: <check-id>
 
 ### Checks created or affected
 
-- C###: <check> -- task: T###
+- <check-id>: <check> -- task: <task-id>
 
 ### Unknowns / needs input
 
@@ -125,6 +129,7 @@ May consult (if exists):
 
 - PLAN.md contains:
 - a plan goal
+- scope links to backlog (milestone(s) and backlog items in scope; guidance-level, not strict schema)
 - context snapshot
 - decisions needed (may be empty)
 - 1-5 tasks

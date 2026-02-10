@@ -81,9 +81,9 @@ Durable truth
 ## Working documents
 
 - work/BACKLOG.md
-- Problem-first backlog
+- Problem-first backlog (milestone grouping is recommended guidance, not mandatory)
 - work/PLAN.md
-- Short-horizon executable plan
+- Short-horizon executable plan (can span one or more milestones)
 - work/CHECKS.md
 - Acceptance and verification checks
 - work/STATUS.md
@@ -162,6 +162,7 @@ When creating or modifying plans:
 - tasks are atomic
 - checks are defined first
 - decisions are explicit
+- multi-milestone scope is allowed when it is the smallest coherent slice
 
 When things feel messy, shrink the plan.
 
