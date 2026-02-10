@@ -67,18 +67,6 @@ May consult:
 ### Suggested next step
 - Run /ap:do <task-id> (or /ap:plan if no plan exists)
 
-### Files updated
-- (none)
-
-### Decisions made
-- (none)
-
-### Tasks created or modified
-- (none)
-
-### Checks created or affected
-- (none)
-
 ### Unknowns / needs input
 - <questions if the next step is unclear>
 ```

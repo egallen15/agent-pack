@@ -2,7 +2,7 @@
 name: ap-status
 description: Summarize current project status.
 agent: agent
-argument-hint: Optional focus area (e.g. "next actions only").
+argument-hint: Where are things at?
 ---
 
 You are now operating in the `ap-status` skill.
