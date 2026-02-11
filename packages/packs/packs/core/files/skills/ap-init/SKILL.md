@@ -89,6 +89,7 @@ If these do not exist, create them from templates.
 - Keep content short and readable.
 - Do not invent requirements.
 - If uncertain, explicitly mark assumptions.
+- When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
 
 ---
 

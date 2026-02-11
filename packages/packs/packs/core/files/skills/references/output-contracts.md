@@ -41,11 +41,11 @@ Every command and agent must produce output that can be summarized using the fol
 
 ### Tasks created or modified
 
-- <task ID> — <what> — <related check>
+- <task ID> - <task title> — <what changed> — <related check ID> - <related check title>
 
 ### Checks created or affected
 
-- <check ID> — <what changed>
+- <check ID> - <check title> — <what changed>
 
 ### Unknowns / needs input
 
@@ -54,6 +54,16 @@ Every command and agent must produce output that can be summarized using the fol
 ```
 
 Sections may be empty, but they should never be omitted.
+
+⸻
+
+## ID listing format
+
+When listing milestones, backlog items, tasks, or checks in agent chat output:
+
+- Always include both ID and title.
+- Use this format: `<ID> - <Title>`.
+- Never list bare IDs alone (for example: `B001`, `M01`, `T003`, `C002`).
 
 ⸻
 

@@ -81,6 +81,7 @@ May consult:
 - Change only what the task requires.
 - Prefer correctness and clarity over cleverness.
 - If the task reveals a missing decision, stop and report it.
+- When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
 
 ---
 
@@ -98,11 +99,11 @@ May consult:
 
 ### Tasks created or modified
 
-- T### -- <status update or note>
+- T### - <task title> -- <status update or note>
 
 ### Checks created or affected
 
-- C### -- <result or notes>
+- C### - <check title> -- <result or notes>
 
 ### Unknowns / needs input
 

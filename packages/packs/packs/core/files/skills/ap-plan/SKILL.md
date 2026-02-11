@@ -89,6 +89,7 @@ May consult (if exists):
 - Follow PLANNING RULES.
 - Prefer clarity over completeness.
 - If uncertainty is high, reduce plan scope rather than adding complexity.
+- When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
 
 ---
 
@@ -110,11 +111,11 @@ May consult (if exists):
 
 ### Tasks created or modified
 
-- <task-id>: <task> -- check: <check-id>
+- <task-id> - <task title> -- <what changed> -- check: <check-id> - <check title>
 
 ### Checks created or affected
 
-- <check-id>: <check> -- task: <task-id>
+- <check-id> - <check title> -- <what changed> -- task: <task-id> - <task title>
 
 ### Unknowns / needs input
 

@@ -78,6 +78,7 @@ May consult:
 - Follow OUTPUT CONTRACTS.
 - Checks must not be redefined during verification.
 - Evidence should be sufficient for later review.
+- When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
 
 ---
 
@@ -96,13 +97,13 @@ May consult:
 
 ### Tasks created or modified
 
-- <fix tasks added to PLAN.md, if any>
+- <task-id> - <task title> -- <fix tasks added to PLAN.md, if any>
 
-- <new fix tasks, if any>
+- <task-id> - <task title> -- <new fix tasks, if any>
 
 ### Checks created or affected
 
-- C### -- pass / fail
+- C### - <check title> -- pass / fail
 
 ### Unknowns / needs input
 

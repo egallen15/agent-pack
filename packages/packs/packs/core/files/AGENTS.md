@@ -32,6 +32,7 @@ Command definitions live as Agent Skills under `.agent-pack/core/skills/` and ar
 - Do not invent requirements
 - Do not execute work without a plan
 - Do not mark work complete without checks
+- When listing milestones, backlog items, tasks, or checks in chat output, always use `ID - Title` format (for example: `B001 - Onboarding drop-off`).
 
 ## Where truth lives
 

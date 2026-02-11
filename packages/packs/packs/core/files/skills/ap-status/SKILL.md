@@ -58,6 +58,7 @@ May consult:
 - Prefer STATUS.md as the source of truth; only add other file info if it changes next steps.
 - Include LOADOUT.md details only when they change execution choices or verification.
 - Always include a friendly nudge to run /ap-do.
+- When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
 
 ---
 
@@ -68,7 +69,7 @@ May consult:
 - <3-7 bullets; focus, next actions, blockers, checks>
 
 ### Suggested next step
-- Run /ap:do <task-id> (or /ap:plan if no plan exists)
+- Run /ap:do <task-id> - <task title> (or /ap:plan if no plan exists)
 
 ### Unknowns / needs input
 - <questions if the next step is unclear>
