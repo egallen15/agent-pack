@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "id": "fullstack",
+  "name": "Fullstack",
+  "include": ["core", "module:research", "module:coding", "module:writing"]
+}

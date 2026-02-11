@@ -1,34 +1,14 @@
 {
-  "name": "@egallen15/agent-pack",
+  "name": "agent-pack-repo",
+  "private": true,
   "version": "0.1.0",
-  "description": "A lightweight starter pack for building projects with agents.",
+  "description": "Monorepo for the agent-pack CLI and official packs.",
   "license": "MIT",
-  "homepage": "https://github.com/egallen15/agent-pack",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/egallen15/agent-pack.git"
-  },
-  "bugs": {
-    "url": "https://github.com/egallen15/agent-pack/issues"
-  },
-  "keywords": [
-    "agent",
-    "copilot",
-    "skills",
-    "productivity"
-  ],
-  "bin": {
-    "agent-pack": "scripts/agent-pack.js"
-  },
-  "files": [
-    "scripts/",
-    "skills/",
-    ".agent-pack/",
-    "AGENTS.md.disabled",
-    "README.md",
-    "LICENSE"
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "sync-skills": "node scripts/sync-skills.js"
+    "test": "npm run test -w packages/cli",
+    "pack:cli": "npm pack -w packages/cli"
   }
 }

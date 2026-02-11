@@ -1,0 +1,19 @@
+{
+  "name": "agent-pack",
+  "version": "0.1.0",
+  "description": "Agent-Pack CLI",
+  "license": "MIT",
+  "bin": {
+    "agent-pack": "dist/index.js",
+    "agentpack": "dist/index.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@agentpack/packs": "0.1.0"
+  }
+}

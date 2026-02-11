@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "research",
+  "name": "Research",
+  "version": "0.1.0",
+  "description": "Research workflow guidance and references",
+  "type": "capability",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}

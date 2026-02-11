@@ -1,269 +1,146 @@
 # agent-pack
 
-A lightweight starter pack for building projects with agents.
+`agent-pack` is a CLI for installing modular agent capability bundles into any repository.
 
-agent-pack borrows the working ideas from GSD (Get Shit Done)—clear specs, small executable plans, explicit decisions, and verification—while deliberately cutting ceremony, commands, and file sprawl.
+## CLI names
 
-If GSD feels powerful but heavy, agent-pack aims to feel small, fast, and obvious.
+The package ships two equivalent commands:
 
-⸻
+- `agent-pack`
+- `agentpack`
 
-## Core principles
+Examples:
 
-1. Few durable truths
-    - Capture what must not drift (vision, constraints, decisions) once, and reuse it everywhere.
-2. Small plans, small tasks
-    - Plans are rolling windows. Tasks are atomic and verifiable.
-3. Decisions are first-class
-   - If something matters, write it down with a reason. If it might change tomorrow, don’t lock it.
-4. Verification beats completion
-   - “Done” means checks pass, not “the agent said it’s finished.”
-5. Lightweight by default
-   - Four commands. A handful of files. No mandatory phases, no agent swarm unless you want one.
+```bash
+npx agent-pack list
+npx agentpack add loadout:researcher
+```
 
-⸻
+## Commands
 
-## Directory layout
+```bash
+agent-pack add <module-or-loadout>
+agent-pack refresh <module-or-loadout> [--scope=context|work|all] [--mode=report|merge|reset]
+agent-pack list [--type=all|module|loadout]
+agent-pack info <id> [--json]
+```
 
-All agent-pack state lives in a single directory:
+### `add` examples
+
+```bash
+agent-pack add core
+agent-pack add module:research
+agent-pack add loadout:fullstack
+```
+
+### `add` flags
+
+- `--agents-md=auto|add|skip|overwrite` (default: `auto`)
+- `--force-agents-md` (required for non-interactive overwrite)
+- `--force` (only for `.agent-pack/**`)
+- `--dry-run`
+- `--yes`
+- `--no-interactive`
+- `--source=official`
+
+### `refresh` examples
+
+```bash
+agent-pack refresh core --mode=report
+agent-pack refresh core --mode=merge --scope=context
+agent-pack refresh loadout:fullstack --mode=reset --scope=all --yes
+```
+
+### `refresh` flags
+
+- `--scope=context|work|all` (default: `all`)
+- `--mode=report|merge|reset` (default: `report`)
+- `--dry-run`
+- `--yes`
+
+## Install output shape
+
+`add` writes into the target repository:
 
 ```txt
-.
-├─ README.md                  # Project overview (humans)
-├─ AGENTS.md                  # Rules of engagement (agents)
-│
-├─ .agent-pack/
-│  ├─ README.md               # agent-pack operator manual
-│  ├─ ap.config.json          # optional config knobs
-│  │
-│  ├─ context/                # durable truth (rarely changes)
-│  │  ├─ PROJECT.md
-│  │  ├─ DECISIONS.md
-│  │  ├─ USERS.md
-│  │  ├─ SECURITY.md
-│  │  └─ PROGRESS.md
-│  │
-│  ├─ work/                   # rolling working surface
-│  │  ├─ BACKLOG.md
-│  │  ├─ PLAN.md
-│  │  ├─ CHECKS.md
-│  │  └─ STATUS.md
-│  │
-│  └─ runs/                   # execution evidence (gitignored or partial)
-│     └─ .gitkeep
-│
-├─ .github/
-│  └─ skills/                  # Agent Skills for VS Code (synced)
-│
-├─ .claude/
-│  └─ skills/                  # Agent Skills for Claude-style tools (synced)
-│
-├─ skills/                     # Agent Skills source of truth
-│  ├─ ap-init/
-│  │  └─ SKILL.md
-│  ├─ ap-plan/
-│  │  └─ SKILL.md
-│  ├─ ap-do/
-│  │  └─ SKILL.md
-│  ├─ ap-check/
-│  │  └─ SKILL.md
-│  │
-│  ├─ agents/                  # agent role contracts
-│  │  ├─ planner.md
-│  │  ├─ researcher.md
-│  │  ├─ builder.md
-│  │  ├─ reviewer.md
-│  │  └─ scribe.md
-│  │
-│  └─ references/              # shared rules & enforcement
-│     ├─ output-contracts.md
-│     └─ planning-rules.md
-│
-├─ scripts/                    # local tooling (sync, install)
-│
-├─ src/                       # your actual project code
-│  └─ ...
-│
-└─ .gitignore
+.agent-pack/
+  manifest.lock.json
+  core/*
+  modules/<module-id>/manifest.json
+  modules/<module-id>/*
+  loadouts/<loadout-id>.json
+AGENTS.md (optional, based on --agents-md mode)
 ```
 
-You can commit everything except runs/ if you want a clean repo.
+For the `core` module, payload files are also materialized into repo root from
+`packages/packs/packs/core/files`.
+Non-platform files are written under `.agent-pack/core/` for core, and
+`.agent-pack/modules/<module-id>/` for other modules. Only platform
+directories are written to repo root (`.github/`, `.claude/`, `.codex/`,
+`.vscode/`). Existing user files are not overwritten.
 
-If you change skills in skills/, run `npm run sync-skills` to refresh the
-generated .github/skills and .claude/skills directories.
+For `core`, memory files under `.agent-pack/core/context/*` and
+`.agent-pack/core/work/*` are never overwritten by `add`, including
+`add --force`. Missing memory files can be created, but existing files are
+treated as user-owned state.
 
-⸻
+`add` also stores versioned snapshots at:
 
-## The four commands
+```txt
+.agent-pack/system/templates/<module-id>/<version>/*
+```
 
-agent-pack intentionally limits itself to four commands. These map loosely to discuss → plan → execute → verify, but with less ceremony.
+State is tracked in:
 
-Agent Skills are the portable form of these command contracts. The canonical
-skills live in skills/ and are synced into .github/skills and .claude/skills for
-tool discovery.
+```txt
+.agent-pack/system/state.json
+```
 
-Quick install:
+## Refresh behavior
+
+`refresh` compares local memory files with template snapshots:
+
+- `report`: print statuses, no writes
+- `merge`: apply clean 3-way merges; write conflict artifacts under
+  `.agent-pack/system/conflicts/<timestamp>/...`
+- `reset`: backup local files under `.agent-pack/backups/<timestamp>/...` and
+  replace with template content
+
+Status labels include:
+
+- `unchanged`
+- `customized`
+- `new-template`
+- `missing-local`
+- `conflict-risk`
+
+## AGENTS.md safety
+
+Default behavior never overwrites an existing `AGENTS.md`.
+
+To overwrite:
+
+1. pass `--agents-md=overwrite`
+2. and either:
+   - pass `--force-agents-md` in non-interactive mode
+   - or type `OVERWRITE AGENTS.md` when prompted interactively
+
+## Monorepo layout
+
+```txt
+packages/
+  cli/    # npm package: agent-pack
+  packs/  # npm package: @agentpack/packs
+```
+
+## Development
 
 ```bash
-npx agent-pack
+npm test
+npm run pack:cli
 ```
 
-### /ap:init — project grounding
+## Migration note
 
-Creates or updates the durable truth for a project.
-
-When to use:
-
-- Starting a new project
-- Clarifying scope that’s getting fuzzy
-
-Produces / updates:
-
-- context/PROJECT.md
-- context/DECISIONS.md
-- context/USERS.md (when user-context details materially shape planning)
-- context/SECURITY.md (when security constraints are relevant)
-- work/BACKLOG.md
-- work/STATUS.md
-
-⸻
-
-### /ap:plan — discuss + plan
-
-Turns 1–3 backlog items into a small, executable plan.
-By default, pick the smallest coherent scope. This may be one milestone or
-multiple milestones when cross-milestone scope is the clearest delivery path.
-
-When to use:
-
-- Before building anything non-trivial
-- When you’re unsure what the next step should be
-
-Produces / updates:
-
-- work/PLAN.md
-- work/CHECKS.md
-- context/DECISIONS.md (if new durable decisions are made)
-
-⸻
-
-### /ap:do — execute
-
-Implements one task from the plan.
-
-When to use:
-
-- You have a clear task with a defined check
-
-Produces / updates:
-
-- Code or artifacts
-- work/STATUS.md
-- A new folder under runs/ describing what changed and how to verify it
-
-⸻
-
-### /ap:check — verify
-
-Runs acceptance checks and validates outcomes.
-
-When to use:
-
-- After one or more /ap:do runs
-- Before calling something “done”
-
-Produces / updates:
-
-- work/CHECKS.md (pass/fail)
-- work/PLAN.md (adds fix tasks if checks fail)
-
-⸻
-
-## Core files (mental model)
-
-You don’t need to remember every file. Just remember what kind of truth each one holds:
-
-- PROJECT.md → What is this? Who is it for? What constraints matter?
-- DECISIONS.md → What have we locked in, and why?
-- USERS.md → Which user segments matter most, their JTBD, and how success is measured?
-- SECURITY.md → What security baseline and risk boundaries must plans respect?
-- BACKLOG.md → What problems are worth solving?
-- PLAN.md → What are we doing next, exactly (and which milestone/backlog items does it map to)?
-- CHECKS.md → How do we know it worked?
-- STATUS.md → Where are we right now?
-- PROGRESS.md → What was completed and learned (append-only)
-
-If something doesn’t fit cleanly into one of these, it probably doesn’t need its own file.
-
-⸻
-
-## Agents (by role, not swarm)
-
-agent-pack uses a small set of clear roles. You don’t need all of them all the time.
-
-Typical roles:
-
-- planner — backlog → plan, resolves ambiguities
-- researcher — explores unknowns, returns options + recommendation
-- builder — implements one task
-- reviewer — sanity-checks outputs and checks
-- scribe — keeps docs clean and consistent
-
-The important part is not the agents themselves, but that each role has a strict output contract.
-
-⸻
-
-## Output contracts (why this stays lightweight)
-
-Every command and agent produces structured output:
-
-- Files updated
-- Decisions made
-- Tasks created (if any)
-- Unknowns / required user input
-
-This replaces heavy workflow rules with a simple question:
-
-“Did the output match the contract?”
-
-If yes, move on. If not, fix it.
-
-⸻
-
-## Typical flow
-
- 1. /ap:init — ground the project
- 2. /ap:plan — define a small, safe plan
- 3. /ap:do T001 — build one thing
- 4. /ap:check — verify it worked
- 5. Repeat
-
-You can skip steps when appropriate. agent-pack is guidance, not a jail.
-
-⸻
-
-## What agent-pack deliberately does not do
-
-- No mandatory phases
-- No required agent swarms
-- No massive planning trees
-- No pretending long-term plans survive contact with reality
-
-If you want those things, GSD is a great fit. agent-pack is for when you want to move fast without losing your footing.
-
-⸻
-
-## Status
-
-agent-pack is intentionally small and evolving. Simplicity is a feature.
-
-The README defines the philosophy and surface area. Everything else should earn its existence.
-
-⸻
-
-## Publish to npm
-
-```bash
-npm login
-npm publish --access public
-```
+Legacy commands (`install`, `sync-skills`) were removed from the CLI surface.
+Use `add`, `list`, and `info`.

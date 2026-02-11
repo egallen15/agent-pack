@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "coding",
+  "name": "Coding",
+  "version": "0.1.0",
+  "description": "Coding workflow conventions and constraints",
+  "type": "capability",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}
