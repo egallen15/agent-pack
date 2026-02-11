@@ -42,7 +42,7 @@ function syncSkills({ sourceRoot, targets = DEFAULT_TARGETS }) {
 
 if (require.main === module) {
   const result = syncSkills({
-    sourceRoot: path.join(process.cwd(), "skills"),
+    sourceRoot: path.join(process.cwd(), ".agent-pack", "core", "skills"),
     targets: DEFAULT_TARGETS,
   });
 

@@ -25,16 +25,16 @@ If no input, provide a general snapshot.
 
 Must consult:
 
-- .agent-pack/work/STATUS.md
-- .agent-pack/work/PLAN.md
+- .agent-pack/core/work/STATUS.md
+- .agent-pack/core/work/PLAN.md
 
 May consult:
 
-- .agent-pack/work/CHECKS.md
-- .agent-pack/context/PROJECT.md
-- .agent-pack/context/DECISIONS.md
-- .agent-pack/context/PROGRESS.md
-- .agent-pack/work/BACKLOG.md
+- .agent-pack/core/work/CHECKS.md
+- .agent-pack/core/context/PROJECT.md
+- .agent-pack/core/context/DECISIONS.md
+- .agent-pack/core/context/PROGRESS.md
+- .agent-pack/core/work/BACKLOG.md
 - Recent runs/ entries (if needed for recency)
 
 ---

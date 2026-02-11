@@ -34,17 +34,17 @@ If no backlog IDs are provided, select the best next problems from BACKLOG.md us
 
 Must consult:
 
-- .agent-pack/context/PROJECT.md
-- .agent-pack/context/DECISIONS.md
-- .agent-pack/work/BACKLOG.md
-- .agent-pack/work/STATUS.md
+- .agent-pack/core/context/PROJECT.md
+- .agent-pack/core/context/DECISIONS.md
+- .agent-pack/core/work/BACKLOG.md
+- .agent-pack/core/work/STATUS.md
 
 May consult (if exists):
 
-- .agent-pack/context/USERS.md (JTBD, goals, and success signals for user-facing work)
-- .agent-pack/context/SECURITY.md (when planning auth, data handling, or compliance-sensitive work)
-- .agent-pack/work/PLAN.md
-- .agent-pack/work/CHECKS.md
+- .agent-pack/core/context/USERS.md (JTBD, goals, and success signals for user-facing work)
+- .agent-pack/core/context/SECURITY.md (when planning auth, data handling, or compliance-sensitive work)
+- .agent-pack/core/work/PLAN.md
+- .agent-pack/core/work/CHECKS.md
 
 ---
 
@@ -96,10 +96,10 @@ May consult (if exists):
 <Output-Structure>
 ### Files updated
 
-- .agent-pack/work/PLAN.md -- <summary>
-- .agent-pack/work/CHECKS.md -- <summary>
-- .agent-pack/work/STATUS.md -- <summary>
-- .agent-pack/context/DECISIONS.md -- <summary if changed>
+- .agent-pack/core/work/PLAN.md -- <summary>
+- .agent-pack/core/work/CHECKS.md -- <summary>
+- .agent-pack/core/work/STATUS.md -- <summary>
+- .agent-pack/core/context/DECISIONS.md -- <summary if changed>
 
 ### Decisions made
 

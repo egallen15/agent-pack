@@ -41,13 +41,13 @@ If inputs are missing, this command must surface them as Unknowns / needs input.
 
 Must consult the following if they exist:
 
-- .agent-pack/context/PROJECT.md
-- .agent-pack/context/DECISIONS.md
-- .agent-pack/context/USERS.md
-- .agent-pack/context/SECURITY.md
-- .agent-pack/context/PROGRESS.md
-- .agent-pack/work/BACKLOG.md
-- .agent-pack/work/STATUS.md
+- .agent-pack/core/context/PROJECT.md
+- .agent-pack/core/context/DECISIONS.md
+- .agent-pack/core/context/USERS.md
+- .agent-pack/core/context/SECURITY.md
+- .agent-pack/core/context/PROGRESS.md
+- .agent-pack/core/work/BACKLOG.md
+- .agent-pack/core/work/STATUS.md
 
 If these do not exist, create them from templates.
 
@@ -93,13 +93,13 @@ If these do not exist, create them from templates.
 
 ### Files updated
 
-- .agent-pack/context/PROJECT.md -- <summary>
-- .agent-pack/context/DECISIONS.md -- <summary>
-- .agent-pack/context/USERS.md -- <summary if created/updated>
-- .agent-pack/context/SECURITY.md -- <summary if created/updated>
-- .agent-pack/context/PROGRESS.md -- <summary>
-- .agent-pack/work/BACKLOG.md -- <summary>
-- .agent-pack/work/STATUS.md -- <summary>
+- .agent-pack/core/context/PROJECT.md -- <summary>
+- .agent-pack/core/context/DECISIONS.md -- <summary>
+- .agent-pack/core/context/USERS.md -- <summary if created/updated>
+- .agent-pack/core/context/SECURITY.md -- <summary if created/updated>
+- .agent-pack/core/context/PROGRESS.md -- <summary>
+- .agent-pack/core/work/BACKLOG.md -- <summary>
+- .agent-pack/core/work/STATUS.md -- <summary>
 
 ### Decisions made
 

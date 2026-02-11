@@ -12,8 +12,8 @@ Keep project memory clean: reduce drift, duplicates, and stale context.
 
 ## Reads
 
-- All .agent-pack/context/*
-- All .agent-pack/work/*
+- All .agent-pack/core/context/*
+- All .agent-pack/core/work/*
 - Recent runs/ summaries
 
 ## Writes

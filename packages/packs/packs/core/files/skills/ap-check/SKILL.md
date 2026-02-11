@@ -32,10 +32,10 @@ Optional:
 
 Must consult:
 
-- .agent-pack/work/CHECKS.md
-- .agent-pack/work/PLAN.md
-- .agent-pack/work/STATUS.md
-- .agent-pack/context/PROJECT.md
+- .agent-pack/core/work/CHECKS.md
+- .agent-pack/core/work/PLAN.md
+- .agent-pack/core/work/STATUS.md
+- .agent-pack/core/context/PROJECT.md
 
 May consult:
 
@@ -84,9 +84,9 @@ May consult:
 ```md
 ### Files updated
 
-- .agent-pack/work/CHECKS.md -- <summary>
-- .agent-pack/work/STATUS.md -- <summary>
-- .agent-pack/work/PLAN.md -- <summary if status changed>
+- .agent-pack/core/work/CHECKS.md -- <summary>
+- .agent-pack/core/work/STATUS.md -- <summary>
+- .agent-pack/core/work/PLAN.md -- <summary if status changed>
 
 ### Decisions made
 

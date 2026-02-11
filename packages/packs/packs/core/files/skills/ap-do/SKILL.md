@@ -32,12 +32,12 @@ If no task ID is provided, pick the next incomplete task from the PLAN.md.
 
 Must consult:
 
-- .agent-pack/work/PLAN.md
-- .agent-pack/work/CHECKS.md
-- .agent-pack/work/STATUS.md
-- .agent-pack/context/PROJECT.md
-- .agent-pack/context/DECISIONS.md
-- .agent-pack/context/PROGRESS.md
+- .agent-pack/core/work/PLAN.md
+- .agent-pack/core/work/CHECKS.md
+- .agent-pack/core/work/STATUS.md
+- .agent-pack/core/context/PROJECT.md
+- .agent-pack/core/context/DECISIONS.md
+- .agent-pack/core/context/PROGRESS.md
 
 May consult:
 
@@ -88,7 +88,7 @@ May consult:
 ### Files updated
 
 - <file path> -- <what changed>
-- .agent-pack/context/PROGRESS.md -- <progress entry>
+- .agent-pack/core/context/PROGRESS.md -- <progress entry>
 
 ### Decisions made
 
