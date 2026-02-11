@@ -1,0 +1,9 @@
+{
+  "chat.promptFilesRecommendations": {
+    "ap-init": true,
+    "ap-plan": true,
+    "ap-do": true,
+    "ap-check": true,
+    "ap-status": true
+  }
+}
