@@ -75,7 +75,7 @@ May consult:
 
 ## Output rules
 
-- Follow OUTPUT CONTRACTS.
+- Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`.
 - Checks must not be redefined during verification.
 - Evidence should be sufficient for later review.
 - When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.

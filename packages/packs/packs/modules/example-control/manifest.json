@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "example-control",
+  "name": "Example Control",
+  "version": "0.1.0",
+  "description": "Example module for the control kind",
+  "type": "control",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}

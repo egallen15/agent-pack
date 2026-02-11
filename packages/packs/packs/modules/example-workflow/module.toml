@@ -1,0 +1,13 @@
+schema_version = 1
+id = "example-workflow"
+name = "Example Workflow"
+version = "0.1.0"
+kind = "workflow"
+description = "Reference module for workflow behavior"
+requires = ["core"]
+tags = ["starter", "role"]
+
+[entrypoints]
+init_skill = "skills/ap-example-init/SKILL.md"
+default_workflow = "workflows/example-loop.yaml"
+status_check = "checks/smoke.sh"

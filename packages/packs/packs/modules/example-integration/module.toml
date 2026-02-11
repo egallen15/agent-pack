@@ -1,0 +1,18 @@
+schema_version = 1
+id = "example-integration"
+name = "Example Integration"
+version = "0.1.0"
+kind = "integration"
+description = "Reference module for MCP-backed integrations"
+requires = ["core"]
+tags = ["automation", "platform"]
+
+[mcp]
+required = true
+servers = ["example-system"]
+required_tools = ["example.search", "example.get", "example.update"]
+
+[auth]
+method = "oauth2"
+scopes = ["read", "write"]
+env_required = ["EXAMPLE_BASE_URL", "EXAMPLE_CLIENT_ID", "EXAMPLE_CLIENT_SECRET"]

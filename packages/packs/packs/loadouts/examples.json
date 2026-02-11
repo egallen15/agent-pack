@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "examples",
+  "name": "Examples",
+  "include": [
+    "core",
+    "module:example-workflow",
+    "module:example-integration",
+    "module:example-domain",
+    "module:example-control"
+  ]
+}

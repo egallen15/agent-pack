@@ -1,6 +1,6 @@
 # Shared rules (apply to all roles)
 
-1. Follow OUTPUT CONTRACTS
+1. Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`
    - Every response must be summarizable using the universal output contract.
 2. Respect truth hierarchy
    - PROJECT.md and DECISIONS.md are highest authority.

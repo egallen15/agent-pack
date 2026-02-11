@@ -85,6 +85,10 @@ test("list prints modules and loadouts", () => {
 
 test("add module installs under .agent-pack and writes lock file", () => {
   const cwd = makeTempDir("agentpack-install-");
+  const legacyReferencesDir = path.join(cwd, ".agent-pack", "core", "skills", "references");
+  fs.mkdirSync(legacyReferencesDir, { recursive: true });
+  fs.writeFileSync(path.join(legacyReferencesDir, "legacy.md"), "legacy\n", "utf8");
+
   const result = runCli(["add", "module:research", "--no-interactive"], { cwd });
 
   assert.equal(result.status, 0, result.stderr);
@@ -94,6 +98,9 @@ test("add module installs under .agent-pack and writes lock file", () => {
   assert.equal(fs.existsSync(path.join(cwd, "AGENTS.md")), true);
   assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "README.md")), true);
   assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "skills", "ap-plan", "SKILL.md")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "context", "OUTPUT-CONTRACTS.md")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "context", "PLANNING-RULES.md")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "skills", "references")), false);
   assert.equal(fs.existsSync(path.join(cwd, ".github", "prompts", "ap-plan.prompt.md")), true);
   assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "scripts", "sync-skills.js")), true);
   assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "system", "templates", "core", "0.1.0", "context", "PROJECT.md")), true);
@@ -335,6 +342,28 @@ test("refresh report shows statuses without writing files", () => {
   assert.match(result.stdout, /Refresh actions/);
   assert.match(result.stdout, /conflict-risk: \.agent-pack\/core\/context\/PROJECT\.md/);
   assert.equal(fs.readFileSync(projectPath, "utf8"), "custom-local\n");
+});
+
+test("refresh removes legacy core skills references directory", () => {
+  const cwd = makeTempDir("agentpack-refresh-legacy-cleanup-");
+  const packsRoot = makeTempDir("agentpack-packs-refresh-legacy-cleanup-");
+  buildCoreCatalog(packsRoot, "1.0.0", {
+    "context/PROJECT.md": "project-v1\n",
+  });
+  let result = runCli(["add", "core", "--no-interactive"], {
+    cwd,
+    env: { AGENTPACK_PACKS_ROOT: packsRoot },
+  });
+  assert.equal(result.status, 0, result.stderr);
+
+  const legacyReferencesDir = path.join(cwd, ".agent-pack", "core", "skills", "references");
+  fs.mkdirSync(legacyReferencesDir, { recursive: true });
+  fs.writeFileSync(path.join(legacyReferencesDir, "legacy.md"), "legacy\n", "utf8");
+  assert.equal(fs.existsSync(legacyReferencesDir), true);
+
+  result = runCli(["refresh", "core", "--mode=report", "--scope=context"], { cwd });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(fs.existsSync(legacyReferencesDir), false);
 });
 
 test("refresh merge applies clean updates and avoids conflict artifacts", () => {

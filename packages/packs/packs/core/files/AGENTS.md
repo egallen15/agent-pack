@@ -28,7 +28,7 @@ Command definitions live as Agent Skills under `.agent-pack/core/skills/` and ar
 
 ## Rules
 
-- Follow OUTPUT CONTRACTS
+- Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`
 - Do not invent requirements
 - Do not execute work without a plan
 - Do not mark work complete without checks

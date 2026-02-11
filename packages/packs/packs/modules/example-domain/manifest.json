@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "example-domain",
+  "name": "Example Domain",
+  "version": "0.1.0",
+  "description": "Example module for the domain kind",
+  "type": "domain",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}

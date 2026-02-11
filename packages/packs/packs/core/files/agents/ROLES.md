@@ -1,7 +1,7 @@
 # AGENT ROLES
 
 agent-pack uses roles, not swarms.
-Roles are lightweight, composable, and governed by OUTPUT CONTRACTS.
+Roles are lightweight, composable, and governed by `.agent-pack/core/context/OUTPUT-CONTRACTS.md`.
 
 An agent may act in multiple roles, but it must follow the role contract for the work it is doing.
 

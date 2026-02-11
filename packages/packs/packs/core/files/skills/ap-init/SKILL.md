@@ -85,7 +85,7 @@ If these do not exist, create them from templates.
 
 ## Output rules
 
-- Follow OUTPUT CONTRACTS.
+- Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`.
 - Keep content short and readable.
 - Do not invent requirements.
 - If uncertain, explicitly mark assumptions.

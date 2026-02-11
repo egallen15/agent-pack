@@ -53,7 +53,7 @@ May consult:
 
 ## Output rules
 
-- Follow OUTPUT CONTRACTS.
+- Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`.
 - Keep the snapshot short and scannable (3-7 bullets).
 - Prefer STATUS.md as the source of truth; only add other file info if it changes next steps.
 - Include LOADOUT.md details only when they change execution choices or verification.

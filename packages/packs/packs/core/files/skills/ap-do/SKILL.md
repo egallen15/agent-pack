@@ -77,7 +77,7 @@ May consult:
 
 ## Output rules
 
-- Follow OUTPUT CONTRACTS.
+- Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`.
 - Change only what the task requires.
 - Prefer correctness and clarity over cleverness.
 - If the task reveals a missing decision, stop and report it.

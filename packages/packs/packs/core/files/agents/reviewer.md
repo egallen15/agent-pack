@@ -12,8 +12,8 @@ Act as quality control: verify that outputs meet contracts and are aligned with 
 
 ## Reads
 
-- OUTPUT CONTRACTS
-- PLANNING RULES
+- .agent-pack/core/context/OUTPUT-CONTRACTS.md
+- .agent-pack/core/context/PLANNING-RULES.md
 - LOADOUT.md
 - PROJECT.md / DECISIONS.md
 - PROGRESS.md

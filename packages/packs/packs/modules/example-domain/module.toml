@@ -1,0 +1,15 @@
+schema_version = 1
+id = "example-domain"
+name = "Example Domain"
+version = "0.1.0"
+kind = "domain"
+description = "Reference module for business/domain context"
+requires = ["core"]
+tags = ["data", "starter"]
+
+[context]
+required_files = [
+  "context/PROJECT.md",
+  "context/TERMS.md",
+  "context/POLICIES.md"
+]

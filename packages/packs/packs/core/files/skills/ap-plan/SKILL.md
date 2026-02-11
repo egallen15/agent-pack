@@ -85,8 +85,8 @@ May consult (if exists):
 
 ## Output rules
 
-- Follow OUTPUT CONTRACTS.
-- Follow PLANNING RULES.
+- Follow `.agent-pack/core/context/OUTPUT-CONTRACTS.md`.
+- Follow `.agent-pack/core/context/PLANNING-RULES.md`.
 - Prefer clarity over completeness.
 - If uncertainty is high, reduce plan scope rather than adding complexity.
 - When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.

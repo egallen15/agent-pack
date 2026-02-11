@@ -76,6 +76,10 @@ Durable truth
 - User segments, critical flows, and success signals
 - context/SECURITY.md
 - Security baseline, threat assumptions, and controls
+- context/OUTPUT-CONTRACTS.md
+- Universal response/output contract rules
+- context/PLANNING-RULES.md
+- Planning quality and scope guardrails
 - context/PROGRESS.md
 - Append-only log of completed work and learnings
 
@@ -144,7 +148,7 @@ An agent may act in multiple roles, but must follow the rules of the role it is 
 
 ## Output contracts
 
-All commands and roles must follow Output Contracts.
+All commands and roles must follow Output Contracts (`context/OUTPUT-CONTRACTS.md`).
 
 Every output must clearly state:
 

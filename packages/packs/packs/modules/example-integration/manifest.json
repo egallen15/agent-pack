@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "example-integration",
+  "name": "Example Integration",
+  "version": "0.1.0",
+  "description": "Example module for the integration kind",
+  "type": "integration",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}

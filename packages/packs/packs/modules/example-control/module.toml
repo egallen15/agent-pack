@@ -1,0 +1,15 @@
+schema_version = 1
+id = "example-control"
+name = "Example Control"
+version = "0.1.0"
+kind = "control"
+description = "Reference module for quality, security, and compliance gates"
+requires = ["core"]
+tags = ["quality", "compliance"]
+
+[validation]
+smoke_checks = [
+  "checks/security-baseline.sh",
+  "checks/quality-gate.sh"
+]
+required_before_use = true

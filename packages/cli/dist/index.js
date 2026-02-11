@@ -590,6 +590,13 @@ async function installSelection(catalog, selection, flags) {
     force: true,
   });
 
+  cleanupLegacyCoreReferencesDir({
+    cwd,
+    flags,
+    actions,
+    filesWritten,
+  });
+
   updateSystemStateForInstall({
     cwd,
     selection,
@@ -955,6 +962,13 @@ function refreshSelection(catalog, selection, flags) {
     };
   }
 
+  cleanupLegacyCoreReferencesDir({
+    cwd,
+    flags,
+    actions,
+    filesWritten,
+  });
+
   if (!flags.dryRun) {
     writeSystemState(cwd, state, actions, filesWritten);
   }
@@ -1126,6 +1140,23 @@ function removeDirIfExists(dirPath) {
     return;
   }
   fs.rmSync(dirPath, { recursive: true, force: true });
+}
+
+function cleanupLegacyCoreReferencesDir({ cwd, flags, actions, filesWritten }) {
+  const legacyDir = path.join(cwd, ".agent-pack", "core", "skills", "references");
+  if (!fs.existsSync(legacyDir)) {
+    return;
+  }
+
+  const relativePath = toPosix(path.relative(cwd, legacyDir));
+  if (flags.dryRun) {
+    actions.push(`remove legacy dir: ${relativePath}`);
+    return;
+  }
+
+  fs.rmSync(legacyDir, { recursive: true, force: true });
+  actions.push(`removed legacy dir: ${relativePath}`);
+  filesWritten.push(relativePath);
 }
 
 function getSnapshotDir(cwd, moduleId, version) {

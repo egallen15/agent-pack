@@ -79,6 +79,156 @@ in platform directories.
 `runs/` can be gitignored (or partially committed) based on how much execution
 evidence you want in version control.
 
+## Module authoring blueprint
+
+If you treat modules as fully packaged capabilities (for example: Jira
+integration with MCP, auth, context, and repeatable workflows), this structure
+works well:
+
+```txt
+modules/<module-id>/
+├─ manifest.json                # current installer contract (required today)
+├─ module.toml                  # richer module contract (optional extension)
+├─ README.md                    # quick start + module guarantees
+├─ AGENTS.md                    # module-specific operating rules
+├─ RUNBOOK.md                   # operator procedures + failure recovery
+├─ skills/                      # skills used by this module
+├─ context/                     # domain terms, schemas, examples, policies
+├─ workflows/                   # executable workflows (sync, triage, update)
+├─ prompts/                     # stable templates used by skills/workflows
+├─ mcp/                         # MCP server/tool config and auth docs
+├─ scripts/                     # setup, validation, and utility scripts
+├─ checks/                      # smoke checks for module health
+├─ security.md                  # secret handling + least-privilege model
+└─ CHANGELOG.md                 # module evolution and compatibility notes
+```
+
+### `module.toml` (proposed schema)
+
+This does not replace `manifest.json` yet. Think of it as an authoring/runtime
+contract for richer modules.
+
+```toml
+schema_version = 1
+id = "jira-acme"
+name = "Jira (Acme)"
+version = "0.1.0"
+kind = "integration"
+description = "Acme Jira workflows via MCP"
+owners = ["platform@acme.com"]
+requires = ["core"]
+conflicts = []
+tags = ["jira", "mcp", "incident"]
+
+[files]
+root = "files"
+
+[entrypoints]
+init_skill = "skills/ap-jira-init/SKILL.md"
+default_workflow = "workflows/sync-open-issues.yaml"
+status_check = "checks/smoke.sh"
+
+[mcp]
+required = true
+servers = ["jira"]
+required_tools = [
+  "jira.search_issues",
+  "jira.get_issue",
+  "jira.update_issue",
+  "jira.add_comment"
+]
+
+[[mcp.server]]
+name = "jira"
+config_file = "mcp/jira.server.json"
+auth_profile = "oauth-acme"
+
+[auth]
+method = "oauth2"
+scopes = ["read:jira-work", "write:jira-work", "offline_access"]
+env_required = ["JIRA_BASE_URL", "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET"]
+token_storage = "os_keychain"
+rotation_days = 90
+
+[context]
+required_files = [
+  "context/PROJECT.md",
+  "context/JIRA_FIELDS.md",
+  "context/ESCALATION_POLICY.md"
+]
+
+[[workflow]]
+id = "daily-triage"
+file = "workflows/daily-triage.yaml"
+description = "Collect new high-priority tickets and post triage summary"
+produces = ["runs/daily-triage.md"]
+
+[[workflow]]
+id = "status-sync"
+file = "workflows/status-sync.yaml"
+description = "Sync local status artifacts into Jira comments"
+produces = ["runs/status-sync.md"]
+
+[validation]
+smoke_checks = [
+  "checks/mcp-connectivity.sh",
+  "checks/permissions.sh",
+  "checks/workflow-dry-run.sh"
+]
+required_before_use = true
+
+[observability]
+run_log_dir = "runs"
+audit_fields = ["workflow_id", "ticket_key", "actor", "timestamp", "outcome"]
+
+[support]
+runbook = "RUNBOOK.md"
+security = "security.md"
+changelog = "CHANGELOG.md"
+```
+
+### Canonical module kinds (tight model)
+
+Use exactly four `kind` values:
+
+- `workflow` - defines how work is executed (skills, plans, checks, role behavior)
+- `integration` - connects external systems (MCP tools, auth, sync/update flows)
+- `domain` - encodes business truth (terminology, policies, schemas, constraints)
+- `control` - enforces guardrails (security, compliance, quality gates, validation)
+
+Everything else should be a `tag`, not a new `kind`.
+
+Recommended tags:
+
+- `quality`
+- `compliance`
+- `data`
+- `ui`
+- `automation`
+- `starter`
+- `role`
+- `platform`
+
+Rule of thumb:
+
+- If it changes compatibility/resolution behavior, it is `kind`.
+- If it improves discovery/filtering, it is a `tag`.
+
+Reference examples in this repo:
+
+- `module:example-workflow`
+- `module:example-integration`
+- `module:example-domain`
+- `module:example-control`
+
+### Design notes for integration modules
+
+- Keep `manifest.json` minimal for install/compatibility resolution.
+- Put operational complexity in `module.toml` + `mcp/` + `workflows/`.
+- Define required MCP tools explicitly so modules fail fast when capabilities are missing.
+- Document auth scopes and secret handling in-module, not in tribal memory.
+- Ship at least one smoke check that validates auth + MCP connectivity + no-op workflow execution.
+
 ## The runtime loop (`/ap:*`)
 
 These are behavioral contracts used by agents during execution:

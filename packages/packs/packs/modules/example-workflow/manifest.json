@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "example-workflow",
+  "name": "Example Workflow",
+  "version": "0.1.0",
+  "description": "Example module for the workflow kind",
+  "type": "workflow",
+  "filesDir": "files",
+  "requires": ["core"],
+  "conflicts": [],
+  "agents": {
+    "supportsAgentsMd": false
+  }
+}
