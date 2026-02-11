@@ -1,6 +1,6 @@
 ---
 name: ap-init
-description: Initialize or re-ground a project by creating durable truth files (PROJECT.md, DECISIONS.md, USERS.md, SECURITY.md, PROGRESS.md, BACKLOG.md, STATUS.md). Use when starting new work or when scope has drifted.
+description: Initialize or re-ground a project by creating durable truth files (PROJECT.md, DECISIONS.md, USERS.md, SECURITY.md, PROGRESS.md, BACKLOG.md, LOADOUT.md, STATUS.md). Use when starting new work or when scope has drifted.
 ---
 
 # /ap:init
@@ -17,6 +17,7 @@ This command creates the durable truth set and the initial working surface:
 - SECURITY.md (security posture, constraints, and baseline controls)
 - PROGRESS.md (completed work and learnings)
 - BACKLOG.md (problem list)
+- LOADOUT.md (installed modules/loadouts and phase usage guidance)
 - STATUS.md (what's happening next)
 
 Use /ap:init when starting a new repo or when scope has drifted.
@@ -47,6 +48,7 @@ Must consult the following if they exist:
 - .agent-pack/core/context/SECURITY.md
 - .agent-pack/core/context/PROGRESS.md
 - .agent-pack/core/work/BACKLOG.md
+- .agent-pack/core/work/LOADOUT.md
 - .agent-pack/core/work/STATUS.md
 
 If these do not exist, create them from templates.
@@ -75,6 +77,9 @@ If these do not exist, create them from templates.
 6. Set immediate next actions
    - Update STATUS.md with current focus + next 3 actions.
    - Prefer actions that lead naturally to /ap:plan.
+7. Initialize loadout context
+   - Ensure LOADOUT.md reflects currently installed modules/loadouts (or placeholders if unknown).
+   - Record module usage expectations for planning, building, and checks.
 
 ---
 
@@ -99,6 +104,7 @@ If these do not exist, create them from templates.
 - .agent-pack/core/context/SECURITY.md -- <summary if created/updated>
 - .agent-pack/core/context/PROGRESS.md -- <summary>
 - .agent-pack/core/work/BACKLOG.md -- <summary>
+- .agent-pack/core/work/LOADOUT.md -- <summary>
 - .agent-pack/core/work/STATUS.md -- <summary>
 
 ### Decisions made
@@ -131,6 +137,7 @@ If these do not exist, create them from templates.
 - SECURITY.md exists when security constraints materially affect planning quality
 - PROGRESS.md exists (may contain only the template)
 - BACKLOG.md has at least 3 meaningful problem statements
+- LOADOUT.md exists with initial module/loadout context
 - STATUS.md has a current focus and 3 next actions
 
 If any of the above are missing, the command must report it.

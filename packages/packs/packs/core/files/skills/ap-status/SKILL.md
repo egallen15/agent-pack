@@ -1,6 +1,6 @@
 ---
 name: ap-status
-description: Summarize current project status from STATUS.md and related files. Use to quickly re-orient and decide the next step.
+description: Summarize current project status from STATUS.md, LOADOUT.md, and related files. Use to quickly re-orient and decide the next step.
 ---
 
 # /ap:status
@@ -27,6 +27,7 @@ Must consult:
 
 - .agent-pack/core/work/STATUS.md
 - .agent-pack/core/work/PLAN.md
+- .agent-pack/core/work/LOADOUT.md
 
 May consult:
 
@@ -45,7 +46,8 @@ May consult:
 2. If PLAN.md has active tasks, surface the next incomplete task and its check.
 3. If CHECKS.md shows failures, call them out briefly.
 4. Mention any blocking issues or open questions from STATUS.md.
-5. End with a recommendation to run /ap-do for the next task.
+5. Call out any module/loadout constraints from LOADOUT.md that affect the next step.
+6. End with a recommendation to run /ap-do for the next task.
 
 ---
 
@@ -54,6 +56,7 @@ May consult:
 - Follow OUTPUT CONTRACTS.
 - Keep the snapshot short and scannable (3-7 bullets).
 - Prefer STATUS.md as the source of truth; only add other file info if it changes next steps.
+- Include LOADOUT.md details only when they change execution choices or verification.
 - Always include a friendly nudge to run /ap-do.
 
 ---
@@ -88,4 +91,3 @@ May consult:
 - Copying large sections of files
 - Ignoring blockers or failed checks
 - Missing the /ap-do recommendation
-
