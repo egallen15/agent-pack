@@ -48,17 +48,18 @@ agent-pack add loadout:fullstack
 
 ```txt
 .agent-pack/
-  README.md
   manifest.lock.json
+  core/*
   modules/<module-id>/manifest.json
-  modules/<module-id>/files/*
+  modules/<module-id>/*
   loadouts/<loadout-id>.json
 AGENTS.md (optional, based on --agents-md mode)
 ```
 
 For the `core` module, payload files are also materialized into repo root from
 `packages/packs/packs/core/files`.
-Non-platform files are written under `.agent-pack/` and only platform
+Non-platform files are written under `.agent-pack/core/` for core, and
+`.agent-pack/modules/<module-id>/` for other modules. Only platform
 directories are written to repo root (`.github/`, `.claude/`, `.codex/`,
 `.vscode/`). Existing user files are not overwritten.
 

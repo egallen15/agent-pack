@@ -433,10 +433,13 @@ async function installSelection(catalog, selection, flags) {
   const filesWritten = [];
 
   const agentpackRoot = path.join(cwd, ".agent-pack");
+  const coreRoot = path.join(agentpackRoot, "core");
   const modulesRoot = path.join(agentpackRoot, "modules");
   const loadoutsRoot = path.join(agentpackRoot, "loadouts");
+  const moduleInstallRoots = new Map();
 
   if (!flags.dryRun) {
+    fs.mkdirSync(coreRoot, { recursive: true });
     fs.mkdirSync(modulesRoot, { recursive: true });
     fs.mkdirSync(loadoutsRoot, { recursive: true });
   }
@@ -445,7 +448,12 @@ async function installSelection(catalog, selection, flags) {
   let loadoutsInstalled = 0;
 
   for (const moduleEntry of selection.modules) {
-    const moduleDir = path.join(modulesRoot, moduleEntry.manifest.id);
+    const moduleDir = getModuleInstallRoot({
+      agentpackRoot,
+      modulesRoot,
+      moduleId: moduleEntry.manifest.id,
+    });
+    moduleInstallRoots.set(moduleEntry.manifest.id, moduleDir);
     const moduleManifestPath = path.join(moduleDir, "manifest.json");
 
     writeIfAllowed({
@@ -462,6 +470,8 @@ async function installSelection(catalog, selection, flags) {
       materializeModuleFiles({
         flags,
         sourceDir: sourceFilesDir,
+        moduleId: moduleEntry.manifest.id,
+        moduleDir,
         destinationRoot: cwd,
         actions,
         filesWritten,
@@ -505,7 +515,7 @@ async function installSelection(catalog, selection, flags) {
       modules: selection.modules.map((entry) => ({
         id: entry.manifest.id,
         version: entry.manifest.version,
-        path: toPosix(path.relative(cwd, path.join(modulesRoot, entry.manifest.id))),
+        path: toPosix(path.relative(cwd, moduleInstallRoots.get(entry.manifest.id))),
       })),
       loadouts: selection.loadouts.map((entry) => ({
         id: entry.loadout.id,
@@ -537,6 +547,8 @@ async function installSelection(catalog, selection, flags) {
 function materializeModuleFiles({
   flags,
   sourceDir,
+  moduleId,
+  moduleDir,
   destinationRoot,
   actions,
   filesWritten,
@@ -545,6 +557,8 @@ function materializeModuleFiles({
     flags,
     sourceRoot: sourceDir,
     currentSourceDir: sourceDir,
+    moduleId,
+    moduleDir,
     destinationRoot,
     actions,
     filesWritten,
@@ -555,6 +569,8 @@ function copyTreeToRoot({
   flags,
   sourceRoot,
   currentSourceDir,
+  moduleId,
+  moduleDir,
   destinationRoot,
   actions,
   filesWritten,
@@ -574,12 +590,16 @@ function copyTreeToRoot({
       destinationRoot,
       relativePath,
       firstPart,
+      moduleId,
+      moduleDir,
     });
     if (entry.isDirectory()) {
       copyTreeToRoot({
         flags,
         sourceRoot,
         currentSourceDir: sourcePath,
+        moduleId,
+        moduleDir,
         destinationRoot,
         actions,
         filesWritten,
@@ -606,14 +626,21 @@ function copyTreeToRoot({
   }
 }
 
-function resolveMaterializedTargetPath({ destinationRoot, relativePath, firstPart }) {
-  if (relativePath.startsWith(".agent-pack/")) {
-    return path.join(destinationRoot, relativePath);
-  }
+function resolveMaterializedTargetPath({ destinationRoot, relativePath, firstPart, moduleId, moduleDir }) {
   if (ROOT_PLATFORM_DIRS.has(firstPart)) {
     return path.join(destinationRoot, relativePath);
   }
-  return path.join(destinationRoot, ".agent-pack", relativePath);
+  const normalizedRelative = relativePath.startsWith(".agent-pack/")
+    ? relativePath.slice(".agent-pack/".length)
+    : relativePath;
+  return path.join(moduleDir, normalizedRelative);
+}
+
+function getModuleInstallRoot({ agentpackRoot, modulesRoot, moduleId }) {
+  if (moduleId === "core") {
+    return path.join(agentpackRoot, "core");
+  }
+  return path.join(modulesRoot, moduleId);
 }
 
 function isManagedAgentPackPath(destinationRoot, targetPath) {

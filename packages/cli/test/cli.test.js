@@ -56,15 +56,16 @@ test("add module installs under .agent-pack and writes lock file", () => {
 
   assert.equal(result.status, 0, result.stderr);
   assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "modules", "research", "manifest.json")), true);
-  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "modules", "core", "manifest.json")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "manifest.json")), true);
   assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "manifest.lock.json")), true);
   assert.equal(fs.existsSync(path.join(cwd, "AGENTS.md")), true);
-  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "README.md")), true);
-  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "skills", "ap-plan", "SKILL.md")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "README.md")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "skills", "ap-plan", "SKILL.md")), true);
   assert.equal(fs.existsSync(path.join(cwd, ".github", "prompts", "ap-plan.prompt.md")), true);
-  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "scripts", "sync-skills.js")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "core", "scripts", "sync-skills.js")), true);
   assert.equal(fs.existsSync(path.join(cwd, "skills")), false);
   assert.equal(fs.existsSync(path.join(cwd, "scripts")), false);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "modules", "core")), false);
 });
 
 test("dry-run reports actions but does not write files", () => {
@@ -89,7 +90,7 @@ test("auto mode does not overwrite AGENTS.md", () => {
 
 test("module payload does not overwrite existing root files", () => {
   const cwd = makeTempDir("agentpack-root-skip-");
-  const skillsDir = path.join(cwd, ".agent-pack", "skills", "ap-plan");
+  const skillsDir = path.join(cwd, ".agent-pack", "core", "skills", "ap-plan");
   fs.mkdirSync(skillsDir, { recursive: true });
   fs.writeFileSync(path.join(skillsDir, "SKILL.md"), "# custom\n", "utf8");
 
