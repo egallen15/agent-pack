@@ -20,6 +20,7 @@ npx agentpack add loadout:researcher
 
 ```bash
 agent-pack add <module-or-loadout>
+agent-pack refresh <module-or-loadout> [--scope=context|work|all] [--mode=report|merge|reset]
 agent-pack list [--type=all|module|loadout]
 agent-pack info <id> [--json]
 ```
@@ -42,6 +43,21 @@ agent-pack add loadout:fullstack
 - `--no-interactive`
 - `--source=official`
 
+### `refresh` examples
+
+```bash
+agent-pack refresh core --mode=report
+agent-pack refresh core --mode=merge --scope=context
+agent-pack refresh loadout:fullstack --mode=reset --scope=all --yes
+```
+
+### `refresh` flags
+
+- `--scope=context|work|all` (default: `all`)
+- `--mode=report|merge|reset` (default: `report`)
+- `--dry-run`
+- `--yes`
+
 ## Install output shape
 
 `add` writes into the target repository:
@@ -62,6 +78,41 @@ Non-platform files are written under `.agent-pack/core/` for core, and
 `.agent-pack/modules/<module-id>/` for other modules. Only platform
 directories are written to repo root (`.github/`, `.claude/`, `.codex/`,
 `.vscode/`). Existing user files are not overwritten.
+
+For `core`, memory files under `.agent-pack/core/context/*` and
+`.agent-pack/core/work/*` are never overwritten by `add`, including
+`add --force`. Missing memory files can be created, but existing files are
+treated as user-owned state.
+
+`add` also stores versioned snapshots at:
+
+```txt
+.agent-pack/system/templates/<module-id>/<version>/*
+```
+
+State is tracked in:
+
+```txt
+.agent-pack/system/state.json
+```
+
+## Refresh behavior
+
+`refresh` compares local memory files with template snapshots:
+
+- `report`: print statuses, no writes
+- `merge`: apply clean 3-way merges; write conflict artifacts under
+  `.agent-pack/system/conflicts/<timestamp>/...`
+- `reset`: backup local files under `.agent-pack/backups/<timestamp>/...` and
+  replace with template content
+
+Status labels include:
+
+- `unchanged`
+- `customized`
+- `new-template`
+- `missing-local`
+- `conflict-risk`
 
 ## AGENTS.md safety
 

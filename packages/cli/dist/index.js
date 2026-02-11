@@ -13,6 +13,8 @@ const EXIT_CODES = {
 
 const BUILTIN_MINIMAL_AGENTS_MD = `# AGENTS.md\n\nThis repository uses Agent-Pack defaults.\n`;
 const ROOT_PLATFORM_DIRS = new Set([".claude", ".codex", ".github", ".vscode"]);
+const REFRESH_SCOPES = new Set(["all", "context", "work"]);
+const REFRESH_MODES = new Set(["report", "merge", "reset"]);
 
 main().catch((error) => {
   console.error(error.message || String(error));
@@ -78,6 +80,25 @@ async function main() {
     return;
   }
 
+  if (command === "refresh") {
+    const specifier = positionals[0];
+    if (!specifier) {
+      console.error("Missing target. Usage: agent-pack refresh <module-or-loadout>");
+      process.exit(EXIT_CODES.ERROR);
+    }
+    const resolved = resolveSelection(catalog, specifier);
+    const result = refreshSelection(catalog, resolved, flags);
+    if (result.actions.length === 0) {
+      console.log("No refresh actions.");
+      return;
+    }
+    console.log("Refresh actions:");
+    for (const line of result.actions) {
+      console.log(`- ${line}`);
+    }
+    return;
+  }
+
   console.error(`Unknown command: ${command}`);
   printHelp();
   process.exit(EXIT_CODES.ERROR);
@@ -95,6 +116,8 @@ function parseArgv(argv) {
     source: "official",
     json: false,
     type: "all",
+    scope: "all",
+    mode: "report",
   };
 
   const positionals = [];
@@ -143,6 +166,14 @@ function parseArgv(argv) {
       flags.type = arg.split("=")[1];
       continue;
     }
+    if (arg.startsWith("--scope=")) {
+      flags.scope = arg.split("=")[1];
+      continue;
+    }
+    if (arg.startsWith("--mode=")) {
+      flags.mode = arg.split("=")[1];
+      continue;
+    }
 
     if (arg.startsWith("--")) {
       console.error(`Unknown flag: ${arg}`);
@@ -164,6 +195,16 @@ function parseArgv(argv) {
     process.exit(EXIT_CODES.ERROR);
   }
 
+  if (!REFRESH_SCOPES.has(flags.scope)) {
+    console.error("--scope must be one of: context|work|all");
+    process.exit(EXIT_CODES.ERROR);
+  }
+
+  if (!REFRESH_MODES.has(flags.mode)) {
+    console.error("--mode must be one of: report|merge|reset");
+    process.exit(EXIT_CODES.ERROR);
+  }
+
   return { command, positionals, flags };
 }
 
@@ -171,6 +212,7 @@ function printHelp() {
   console.log("agent-pack (alias: agentpack)\n");
   console.log("Usage:");
   console.log("  agent-pack add <module-or-loadout> [flags]");
+  console.log("  agent-pack refresh <module-or-loadout> [flags]");
   console.log("  agent-pack list [--type=all|module|loadout]");
   console.log("  agent-pack info <id> [--json]");
   console.log("");
@@ -178,6 +220,7 @@ function printHelp() {
   console.log("  npx agent-pack add core");
   console.log("  npx agent-pack add module:research");
   console.log("  npx agent-pack add loadout:researcher");
+  console.log("  npx agent-pack refresh core --mode=report");
   console.log("  npx agentpack list");
   console.log("");
   console.log("Flags:");
@@ -188,6 +231,8 @@ function printHelp() {
   console.log("  --yes");
   console.log("  --no-interactive");
   console.log("  --source=official");
+  console.log("  --scope=context|work|all");
+  console.log("  --mode=report|merge|reset");
 }
 
 function loadCatalog() {
@@ -476,6 +521,15 @@ async function installSelection(catalog, selection, flags) {
         actions,
         filesWritten,
       });
+      captureTemplateSnapshot({
+        flags,
+        sourceDir: sourceFilesDir,
+        moduleId: moduleEntry.manifest.id,
+        moduleVersion: moduleEntry.manifest.version,
+        cwd,
+        actions,
+        filesWritten,
+      });
     }
 
     modulesInstalled += 1;
@@ -534,6 +588,14 @@ async function installSelection(catalog, selection, flags) {
     actions,
     filesWritten,
     force: true,
+  });
+
+  updateSystemStateForInstall({
+    cwd,
+    selection,
+    flags,
+    actions,
+    filesWritten,
   });
 
   return {
@@ -608,7 +670,10 @@ function copyTreeToRoot({
     }
 
     const targetExists = fs.existsSync(targetPath);
-    if (targetExists && !(flags.force && isManagedAgentPackPath(destinationRoot, targetPath))) {
+    const isMemoryFile = isCoreMemoryRelativePath(relativePath) && moduleId === "core";
+    const canOverwrite = targetExists && flags.force && isManagedAgentPackPath(destinationRoot, targetPath) && !isMemoryFile;
+
+    if (targetExists && !canOverwrite) {
       actions.push(`skip existing: ${toPosix(path.relative(process.cwd(), targetPath))}`);
       continue;
     }
@@ -626,7 +691,7 @@ function copyTreeToRoot({
   }
 }
 
-function resolveMaterializedTargetPath({ destinationRoot, relativePath, firstPart, moduleId, moduleDir }) {
+function resolveMaterializedTargetPath({ destinationRoot, relativePath, firstPart, moduleDir }) {
   if (ROOT_PLATFORM_DIRS.has(firstPart)) {
     return path.join(destinationRoot, relativePath);
   }
@@ -754,6 +819,450 @@ function selectAgentsTemplate(catalog, selection) {
   }
 
   return { content: BUILTIN_MINIMAL_AGENTS_MD, source: "builtin:minimal" };
+}
+
+function refreshSelection(catalog, selection, flags) {
+  const cwd = process.cwd();
+  const actions = [];
+  const filesWritten = [];
+  const state = loadSystemState(cwd);
+  const timestamp = formatTimestamp();
+
+  for (const moduleEntry of selection.modules) {
+    const moduleId = moduleEntry.manifest.id;
+    if (moduleId !== "core") {
+      actions.push(`skip module:${moduleId} (no refreshable memory files)`);
+      continue;
+    }
+
+    const moduleState = ensureModuleState(state, moduleId);
+    const installedVersion = moduleState.installedVersion || moduleEntry.manifest.version;
+    const nextVersion = moduleState.latestSnapshotVersion || installedVersion;
+    const baseVersion = moduleState.lastBaseVersion || null;
+
+    const nextSnapshotDir = getSnapshotDir(cwd, moduleId, nextVersion);
+    if (!fs.existsSync(nextSnapshotDir)) {
+      actions.push(`skip module:${moduleId} (missing snapshot for ${nextVersion})`);
+      continue;
+    }
+
+    const baseSnapshotDir = baseVersion ? getSnapshotDir(cwd, moduleId, baseVersion) : null;
+    const hasBaseSnapshot = baseSnapshotDir ? fs.existsSync(baseSnapshotDir) : false;
+
+    const relativeFiles = collectCoreMemoryTemplateFiles(nextSnapshotDir, flags.scope);
+    if (relativeFiles.length === 0) {
+      actions.push(`skip module:${moduleId} (no files in scope '${flags.scope}')`);
+      continue;
+    }
+
+    let hadConflicts = false;
+
+    for (const relativeFile of relativeFiles) {
+      const nextPath = path.join(nextSnapshotDir, relativeFile);
+      const localPath = path.join(cwd, ".agent-pack", "core", relativeFile);
+      const localExists = fs.existsSync(localPath);
+      const nextText = fs.readFileSync(nextPath, "utf8");
+
+      if (!localExists) {
+        actions.push(`missing-local: ${toPosix(path.join(".agent-pack", "core", relativeFile))}`);
+        if (flags.mode === "reset" && !flags.dryRun) {
+          fs.mkdirSync(path.dirname(localPath), { recursive: true });
+          fs.writeFileSync(localPath, nextText, "utf8");
+          filesWritten.push(toPosix(path.relative(cwd, localPath)));
+          actions.push(`wrote: ${toPosix(path.relative(cwd, localPath))}`);
+        }
+        continue;
+      }
+
+      const localText = fs.readFileSync(localPath, "utf8");
+      const basePath = hasBaseSnapshot ? path.join(baseSnapshotDir, relativeFile) : null;
+      const baseExists = basePath ? fs.existsSync(basePath) : false;
+      const baseText = baseExists ? fs.readFileSync(basePath, "utf8") : null;
+
+      const status = classifyRefreshStatus({ localText, nextText, baseText, hasBase: baseExists });
+      actions.push(`${status}: ${toPosix(path.join(".agent-pack", "core", relativeFile))}`);
+
+      if (flags.mode === "report") {
+        continue;
+      }
+
+      if (flags.mode === "reset") {
+        const backupPath = path.join(cwd, ".agent-pack", "backups", timestamp, ".agent-pack", "core", relativeFile);
+        if (!flags.dryRun) {
+          fs.mkdirSync(path.dirname(backupPath), { recursive: true });
+          fs.writeFileSync(backupPath, localText, "utf8");
+          filesWritten.push(toPosix(path.relative(cwd, backupPath)));
+          fs.writeFileSync(localPath, nextText, "utf8");
+          filesWritten.push(toPosix(path.relative(cwd, localPath)));
+        }
+        actions.push(`backup: ${toPosix(path.relative(cwd, backupPath))}`);
+        actions.push(`${flags.dryRun ? "would reset" : "reset"}: ${toPosix(path.relative(cwd, localPath))}`);
+        continue;
+      }
+
+      if (!baseExists) {
+        hadConflicts = true;
+        const conflictPath = writeConflictArtifact({
+          cwd,
+          timestamp,
+          relativeFile,
+          localText,
+          nextText,
+          baseText: null,
+          dryRun: flags.dryRun,
+          filesWritten,
+        });
+        actions.push(`conflict-risk: ${toPosix(path.relative(cwd, conflictPath))}`);
+        continue;
+      }
+
+      const merged = threeWayMergeText(baseText, localText, nextText);
+      if (!merged.clean) {
+        hadConflicts = true;
+        const conflictPath = writeConflictArtifact({
+          cwd,
+          timestamp,
+          relativeFile,
+          localText,
+          nextText,
+          baseText,
+          dryRun: flags.dryRun,
+          filesWritten,
+        });
+        actions.push(`conflict-risk: ${toPosix(path.relative(cwd, conflictPath))}`);
+        continue;
+      }
+
+      if (merged.output !== localText) {
+        if (!flags.dryRun) {
+          fs.writeFileSync(localPath, merged.output, "utf8");
+          filesWritten.push(toPosix(path.relative(cwd, localPath)));
+        }
+        actions.push(`${flags.dryRun ? "would merge" : "merged"}: ${toPosix(path.relative(cwd, localPath))}`);
+      }
+    }
+
+    const shouldAdvanceBase = flags.mode === "reset" || (flags.mode === "merge" && !hadConflicts);
+    if (shouldAdvanceBase) {
+      moduleState.lastBaseVersion = nextVersion;
+    }
+
+    moduleState.lastRefreshedAt = new Date().toISOString();
+    moduleState.lastRefreshResult = {
+      mode: flags.mode,
+      scope: flags.scope,
+      status: hadConflicts ? "conflicts" : "ok",
+    };
+  }
+
+  if (!flags.dryRun) {
+    writeSystemState(cwd, state, actions, filesWritten);
+  }
+
+  return { actions, filesWritten };
+}
+
+function classifyRefreshStatus({ localText, nextText, baseText, hasBase }) {
+  if (localText === nextText) {
+    return "unchanged";
+  }
+  if (!hasBase) {
+    return "conflict-risk";
+  }
+  if (localText === baseText && nextText !== baseText) {
+    return "new-template";
+  }
+  if (nextText === baseText && localText !== baseText) {
+    return "customized";
+  }
+  return "conflict-risk";
+}
+
+function writeConflictArtifact({ cwd, timestamp, relativeFile, localText, nextText, baseText, dryRun, filesWritten }) {
+  const target = path.join(cwd, ".agent-pack", "system", "conflicts", timestamp, `${relativeFile}.patch`);
+  const body = [
+    "# agent-pack refresh conflict artifact",
+    `# file: .agent-pack/core/${relativeFile}`,
+    "",
+    "## BASE",
+    baseText == null ? "<none>" : baseText,
+    "## LOCAL",
+    localText,
+    "## NEXT",
+    nextText,
+    "",
+  ].join("\n");
+
+  if (!dryRun) {
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, body, "utf8");
+    filesWritten.push(toPosix(path.relative(cwd, target)));
+  }
+
+  return target;
+}
+
+function threeWayMergeText(baseText, localText, nextText) {
+  if (localText === nextText) {
+    return { clean: true, output: localText };
+  }
+  if (localText === baseText) {
+    return { clean: true, output: nextText };
+  }
+  if (nextText === baseText) {
+    return { clean: true, output: localText };
+  }
+
+  const base = splitLines(baseText);
+  const local = splitLines(localText);
+  const next = splitLines(nextText);
+  const out = [];
+  const max = Math.max(base.lines.length, local.lines.length, next.lines.length);
+
+  for (let i = 0; i < max; i += 1) {
+    const b = lineAt(base.lines, i);
+    const l = lineAt(local.lines, i);
+    const n = lineAt(next.lines, i);
+
+    if (l === n) {
+      if (l != null) out.push(l);
+      continue;
+    }
+    if (l === b) {
+      if (n != null) out.push(n);
+      continue;
+    }
+    if (n === b) {
+      if (l != null) out.push(l);
+      continue;
+    }
+    return { clean: false, output: localText };
+  }
+
+  const newline = local.hasFinalNewline || next.hasFinalNewline || base.hasFinalNewline;
+  return { clean: true, output: `${out.join("\n")}${newline ? "\n" : ""}` };
+}
+
+function splitLines(value) {
+  const normalized = value.replace(/\r\n/g, "\n");
+  const hasFinalNewline = normalized.endsWith("\n");
+  const lines = normalized.split("\n");
+  if (hasFinalNewline) {
+    lines.pop();
+  }
+  return { lines, hasFinalNewline };
+}
+
+function lineAt(lines, index) {
+  if (index < 0 || index >= lines.length) {
+    return null;
+  }
+  return lines[index];
+}
+
+function collectCoreMemoryTemplateFiles(snapshotDir, scope) {
+  const roots = scope === "all" ? ["context", "work"] : [scope];
+  const files = [];
+  for (const root of roots) {
+    const rootDir = path.join(snapshotDir, root);
+    if (!fs.existsSync(rootDir)) {
+      continue;
+    }
+    walkFiles(rootDir, (filePath) => {
+      files.push(toPosix(path.relative(snapshotDir, filePath)));
+    });
+  }
+  files.sort();
+  return files;
+}
+
+function walkFiles(rootDir, onFile) {
+  const entries = fs.readdirSync(rootDir, { withFileTypes: true });
+  for (const entry of entries) {
+    const nextPath = path.join(rootDir, entry.name);
+    if (entry.isDirectory()) {
+      walkFiles(nextPath, onFile);
+      continue;
+    }
+    if (entry.isFile()) {
+      onFile(nextPath);
+    }
+  }
+}
+
+function isCoreMemoryRelativePath(relativePath) {
+  return relativePath.startsWith("context/") || relativePath.startsWith("work/");
+}
+
+function captureTemplateSnapshot({ flags, sourceDir, moduleId, moduleVersion, cwd, actions, filesWritten }) {
+  const targetDir = getSnapshotDir(cwd, moduleId, moduleVersion);
+  if (flags.dryRun) {
+    actions.push(`snapshot: ${toPosix(path.relative(cwd, targetDir))}`);
+    return;
+  }
+  removeDirIfExists(targetDir);
+  copyDirRecursive(sourceDir, targetDir);
+  filesWritten.push(toPosix(path.relative(cwd, targetDir)));
+  actions.push(`snapshot updated: ${toPosix(path.relative(cwd, targetDir))}`);
+}
+
+function copyDirRecursive(sourceDir, targetDir) {
+  fs.mkdirSync(targetDir, { recursive: true });
+  const entries = fs.readdirSync(sourceDir, { withFileTypes: true });
+  for (const entry of entries) {
+    const sourcePath = path.join(sourceDir, entry.name);
+    const targetPath = path.join(targetDir, entry.name);
+    if (entry.isDirectory()) {
+      copyDirRecursive(sourcePath, targetPath);
+      continue;
+    }
+    fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+    fs.copyFileSync(sourcePath, targetPath);
+  }
+}
+
+function removeDirIfExists(dirPath) {
+  if (!fs.existsSync(dirPath)) {
+    return;
+  }
+  fs.rmSync(dirPath, { recursive: true, force: true });
+}
+
+function getSnapshotDir(cwd, moduleId, version) {
+  return path.join(cwd, ".agent-pack", "system", "templates", moduleId, version || "unknown");
+}
+
+function updateSystemStateForInstall({ cwd, selection, flags, actions, filesWritten }) {
+  const state = loadSystemState(cwd);
+  for (const moduleEntry of selection.modules) {
+    const moduleId = moduleEntry.manifest.id;
+    const moduleVersion = moduleEntry.manifest.version;
+    const moduleState = ensureModuleState(state, moduleId);
+    moduleState.installedVersion = moduleVersion;
+    moduleState.latestSnapshotVersion = moduleVersion;
+    if (!moduleState.lastBaseVersion) {
+      moduleState.lastBaseVersion = moduleVersion;
+    }
+  }
+
+  if (!flags.dryRun) {
+    writeSystemState(cwd, state, actions, filesWritten);
+  }
+}
+
+function ensureModuleState(state, moduleId) {
+  if (!state.modules[moduleId]) {
+    state.modules[moduleId] = {
+      installedVersion: null,
+      latestSnapshotVersion: null,
+      lastBaseVersion: null,
+      lastRefreshedAt: null,
+      lastRefreshResult: null,
+    };
+  }
+  return state.modules[moduleId];
+}
+
+function loadSystemState(cwd) {
+  const statePath = path.join(cwd, ".agent-pack", "system", "state.json");
+  if (fs.existsSync(statePath)) {
+    const state = readJson(statePath);
+    if (!state.modules || typeof state.modules !== "object") {
+      state.modules = {};
+    }
+    return state;
+  }
+
+  const migrated = {
+    schemaVersion: 1,
+    modules: {},
+  };
+
+  const lockPath = path.join(cwd, ".agent-pack", "manifest.lock.json");
+  if (fs.existsSync(lockPath)) {
+    const lock = readJson(lockPath);
+    for (const mod of lock.resolved && Array.isArray(lock.resolved.modules) ? lock.resolved.modules : []) {
+      migrated.modules[mod.id] = {
+        installedVersion: mod.version || null,
+        latestSnapshotVersion: mod.version || null,
+        lastBaseVersion: inferBaseVersion(cwd, mod.id, mod.version || null),
+        lastRefreshedAt: null,
+        lastRefreshResult: null,
+      };
+    }
+  }
+
+  const discovered = discoverInstalledModules(cwd);
+  for (const [moduleId, version] of discovered.entries()) {
+    if (!migrated.modules[moduleId]) {
+      migrated.modules[moduleId] = {
+        installedVersion: version,
+        latestSnapshotVersion: version,
+        lastBaseVersion: inferBaseVersion(cwd, moduleId, version),
+        lastRefreshedAt: null,
+        lastRefreshResult: null,
+      };
+      continue;
+    }
+    if (!migrated.modules[moduleId].installedVersion) {
+      migrated.modules[moduleId].installedVersion = version;
+    }
+    if (!migrated.modules[moduleId].latestSnapshotVersion) {
+      migrated.modules[moduleId].latestSnapshotVersion = version;
+    }
+    if (!migrated.modules[moduleId].lastBaseVersion) {
+      migrated.modules[moduleId].lastBaseVersion = inferBaseVersion(cwd, moduleId, version);
+    }
+  }
+
+  return migrated;
+}
+
+function inferBaseVersion(cwd, moduleId, version) {
+  if (!version) {
+    return null;
+  }
+  const snapshotDir = getSnapshotDir(cwd, moduleId, version);
+  return fs.existsSync(snapshotDir) ? version : null;
+}
+
+function discoverInstalledModules(cwd) {
+  const out = new Map();
+  const coreManifestPath = path.join(cwd, ".agent-pack", "core", "manifest.json");
+  if (fs.existsSync(coreManifestPath)) {
+    const core = readJson(coreManifestPath);
+    out.set(core.id, core.version || null);
+  }
+
+  const modulesRoot = path.join(cwd, ".agent-pack", "modules");
+  if (fs.existsSync(modulesRoot)) {
+    for (const entry of fs.readdirSync(modulesRoot, { withFileTypes: true })) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+      const manifestPath = path.join(modulesRoot, entry.name, "manifest.json");
+      if (!fs.existsSync(manifestPath)) {
+        continue;
+      }
+      const manifest = readJson(manifestPath);
+      out.set(manifest.id, manifest.version || null);
+    }
+  }
+
+  return out;
+}
+
+function writeSystemState(cwd, state, actions, filesWritten) {
+  const statePath = path.join(cwd, ".agent-pack", "system", "state.json");
+  fs.mkdirSync(path.dirname(statePath), { recursive: true });
+  fs.writeFileSync(statePath, `${stableStringify(state)}\n`, "utf8");
+  const rel = toPosix(path.relative(cwd, statePath));
+  actions.push(`wrote: ${rel}`);
+  filesWritten.push(rel);
+}
+
+function formatTimestamp() {
+  return new Date().toISOString().replace(/[:.]/g, "-");
 }
 
 function promptLine(prompt) {
