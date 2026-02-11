@@ -32,13 +32,14 @@ When instructions or information conflict, resolve them in this order:
 2. context/DECISIONS.md — durable decisions and constraints
 3. context/USERS.md — durable user segments, goals, and success signals
 4. context/SECURITY.md — security posture, controls, and open risks
-5. work/PLAN.md — current executable intent
-6. work/CHECKS.md — how success is verified
-7. work/STATUS.md — current state and next actions
-8. context/PROGRESS.md — append-only log of completed work and learnings
-9. work/BACKLOG.md — future problems to solve
-10. runs/ — evidence and execution history
-11. Chat or ad-hoc discussion — lowest authority
+5. work/LOADOUT.md — installed modules/loadouts and phase usage rules
+6. work/PLAN.md — current executable intent
+7. work/CHECKS.md — how success is verified
+8. work/STATUS.md — current state and next actions
+9. context/PROGRESS.md — append-only log of completed work and learnings
+10. work/BACKLOG.md — future problems to solve
+11. runs/ — evidence and execution history
+12. Chat or ad-hoc discussion — lowest authority
 
 Never violate higher truth to satisfy lower truth.
 
@@ -82,6 +83,8 @@ Durable truth
 
 - work/BACKLOG.md
 - Problem-first backlog (milestone grouping is recommended guidance, not mandatory)
+- work/LOADOUT.md
+- Installed module/loadout context and when each should influence planning/build/check phases
 - work/PLAN.md
 - Short-horizon executable plan (can span one or more milestones)
 - work/CHECKS.md

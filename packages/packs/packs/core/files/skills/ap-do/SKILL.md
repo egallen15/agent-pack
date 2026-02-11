@@ -34,6 +34,7 @@ Must consult:
 
 - .agent-pack/core/work/PLAN.md
 - .agent-pack/core/work/CHECKS.md
+- .agent-pack/core/work/LOADOUT.md
 - .agent-pack/core/work/STATUS.md
 - .agent-pack/core/context/PROJECT.md
 - .agent-pack/core/context/DECISIONS.md
@@ -54,6 +55,7 @@ May consult:
    - Confirm task/check IDs are traceable under the repo's conventions.
 2. Reconstruct intent
    - Re-read task scope, done-when condition, and related decisions.
+   - Confirm the task's approach aligns with installed module/loadout rules in LOADOUT.md.
    - If intent is unclear, stop and report an unknown.
 3. Execute the task
    - Make the minimum changes required to satisfy the task.

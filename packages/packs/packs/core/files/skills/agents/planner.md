@@ -13,6 +13,7 @@ Turn backlog problems into a small, executable plan.
 - PROJECT.md
 - DECISIONS.md
 - PROGRESS.md
+- LOADOUT.md
 - BACKLOG.md
 - STATUS.md
 

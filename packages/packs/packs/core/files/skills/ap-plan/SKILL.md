@@ -36,6 +36,7 @@ Must consult:
 
 - .agent-pack/core/context/PROJECT.md
 - .agent-pack/core/context/DECISIONS.md
+- .agent-pack/core/work/LOADOUT.md
 - .agent-pack/core/work/BACKLOG.md
 - .agent-pack/core/work/STATUS.md
 
@@ -60,6 +61,7 @@ May consult (if exists):
    - A concrete state change.
 3. Create a context snapshot
    - Pull only the constraints/decisions relevant to this plan.
+   - Pull relevant module/loadout constraints from LOADOUT.md.
    - Consult USERS.md and SECURITY.md when they are relevant to scope.
 4. Surface decisions needed
    - Identify ambiguity that could cause rework.

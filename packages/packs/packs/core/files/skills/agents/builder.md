@@ -12,6 +12,7 @@ Execute one task from PLAN.md with minimal necessary changes.
 
 - PLAN.md (task scope, done-when)
 - CHECKS.md (the linked check)
+- LOADOUT.md (installed module/loadout constraints)
 - PROJECT.md / DECISIONS.md (relevant constraints)
 - PROGRESS.md (recent completions and learnings)
 - STATUS.md

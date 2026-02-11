@@ -34,6 +34,7 @@ Must consult:
 
 - .agent-pack/core/work/CHECKS.md
 - .agent-pack/core/work/PLAN.md
+- .agent-pack/core/work/LOADOUT.md
 - .agent-pack/core/work/STATUS.md
 - .agent-pack/core/context/PROJECT.md
 
@@ -52,6 +53,7 @@ May consult:
     - Preserve traceability between each check ID and task ID using repo conventions.
 2. Re-read intent
      - Review the task's done-when condition and plan goal.
+     - Confirm module/loadout verification expectations from LOADOUT.md.
 3. Run the check
      - Follow the "How to verify" steps.
      - Record evidence.

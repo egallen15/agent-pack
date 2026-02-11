@@ -10,6 +10,7 @@ Before doing any work:
 2. Read `.agent-pack/core/context/PROJECT.md`
 3. Read `.agent-pack/core/context/DECISIONS.md`
 4. Read `.agent-pack/core/context/PROGRESS.md`
+5. Read `.agent-pack/core/work/LOADOUT.md`
 
 ## How to work in this repo
 

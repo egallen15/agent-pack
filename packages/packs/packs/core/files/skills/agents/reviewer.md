@@ -14,6 +14,7 @@ Act as quality control: verify that outputs meet contracts and are aligned with 
 
 - OUTPUT CONTRACTS
 - PLANNING RULES
+- LOADOUT.md
 - PROJECT.md / DECISIONS.md
 - PROGRESS.md
 - PLAN.md / CHECKS.md / STATUS.md
