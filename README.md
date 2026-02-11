@@ -1,22 +1,128 @@
 # agent-pack
 
-`agent-pack` is a CLI for installing modular agent capability bundles into any repository.
+A lightweight starter pack for building projects with agents.
 
-## CLI names
+agent-pack borrows the working ideas from GSD (Get Shit Done): clear specs,
+small executable plans, explicit decisions, and verification, while deliberately
+cutting ceremony, commands, and file sprawl.
+
+If GSD feels powerful but heavy, agent-pack aims to feel small, fast, and
+obvious.
+
+## Two surfaces, one philosophy
+
+agent-pack has two complementary surfaces:
+
+- Runtime workflow (`/ap:*`): how agents execute work inside a project.
+- CLI (`agent-pack` / `agentpack`): how you install, inspect, and refresh packs.
+
+The philosophy is the same in both places: keep durable truth small, plans
+executable, decisions explicit, and verification mandatory.
+
+## Core principles
+
+1. Few durable truths
+   - Capture what must not drift (vision, constraints, decisions) once, and
+     reuse it everywhere.
+2. Small plans, small tasks
+   - Plans are rolling windows. Tasks are atomic and verifiable.
+3. Decisions are first-class
+   - If something matters, write it down with a reason. If it might change
+     tomorrow, do not lock it.
+4. Verification beats completion
+   - "Done" means checks pass, not "the agent said it is finished."
+5. Lightweight by default
+   - Minimal commands. A handful of files. No mandatory swarm behavior.
+
+## Project layout (after `agent-pack add core`)
+
+All agent-pack state lives under `.agent-pack/`, with generated discovery files
+in platform directories.
+
+```txt
+.
+├─ README.md                     # project overview (humans)
+├─ AGENTS.md                     # rules of engagement (optional, protected)
+│
+├─ .agent-pack/
+│  ├─ manifest.lock.json
+│  ├─ core/
+│  │  ├─ README.md               # operator manual
+│  │  ├─ AGENTS.md               # template copy
+│  │  ├─ context/
+│  │  │  ├─ PROJECT.md
+│  │  │  ├─ DECISIONS.md
+│  │  │  ├─ USERS.md
+│  │  │  ├─ SECURITY.md
+│  │  │  └─ PROGRESS.md
+│  │  ├─ work/
+│  │  │  ├─ BACKLOG.md
+│  │  │  ├─ PLAN.md
+│  │  │  ├─ CHECKS.md
+│  │  │  ├─ STATUS.md
+│  │  │  └─ LOADOUT.md
+│  │  ├─ runs/
+│  │  ├─ skills/
+│  │  └─ scripts/
+│  ├─ modules/<module-id>/...
+│  ├─ loadouts/<loadout-id>.json
+│  └─ system/
+│     ├─ state.json
+│     └─ templates/<module-id>/<version>/...
+│
+├─ .github/prompts/              # generated skill discovery files
+├─ .claude/skills/               # generated skill discovery files
+├─ .codex/prompts/               # generated skill discovery files (if present)
+└─ .vscode/prompts/              # generated skill discovery files (if present)
+```
+
+`runs/` can be gitignored (or partially committed) based on how much execution
+evidence you want in version control.
+
+## The runtime loop (`/ap:*`)
+
+These are behavioral contracts used by agents during execution:
+
+1. `/ap:init` - ground project truth
+2. `/ap:plan` - define a small, executable plan
+3. `/ap:do <task-id>` - execute one task
+4. `/ap:check` - verify outcomes and add fix tasks if needed
+
+Optional helper:
+
+- `/ap:status` - summarize current state and recommended next action
+
+You can skip steps when appropriate. Skipping verification is usually a smell.
+
+## Core files (mental model)
+
+- `PROJECT.md` -> what are we building, for whom, under which constraints?
+- `DECISIONS.md` -> what is locked, and why?
+- `USERS.md` -> who matters most, and what signals success?
+- `SECURITY.md` -> what risk boundaries and controls must be respected?
+- `BACKLOG.md` -> what problems are worth solving next?
+- `PLAN.md` -> what is the smallest coherent next slice?
+- `CHECKS.md` -> how do we prove it worked?
+- `STATUS.md` -> where are we now, and what is next?
+- `PROGRESS.md` -> append-only record of completed work and learnings
+
+If something does not fit one of these, it probably does not need a new file.
+
+## CLI
 
 The package ships two equivalent commands:
 
 - `agent-pack`
 - `agentpack`
 
-Examples:
+Quick start:
 
 ```bash
 npx agent-pack list
-npx agentpack add loadout:researcher
+npx agent-pack add core
 ```
 
-## Commands
+### CLI commands
 
 ```bash
 agent-pack add <module-or-loadout>
@@ -51,59 +157,12 @@ agent-pack refresh core --mode=merge --scope=context
 agent-pack refresh loadout:fullstack --mode=reset --scope=all --yes
 ```
 
-### `refresh` flags
+### `refresh` behavior
 
-- `--scope=context|work|all` (default: `all`)
-- `--mode=report|merge|reset` (default: `report`)
-- `--dry-run`
-- `--yes`
-
-## Install output shape
-
-`add` writes into the target repository:
-
-```txt
-.agent-pack/
-  manifest.lock.json
-  core/*
-  modules/<module-id>/manifest.json
-  modules/<module-id>/*
-  loadouts/<loadout-id>.json
-AGENTS.md (optional, based on --agents-md mode)
-```
-
-For the `core` module, payload files are also materialized into repo root from
-`packages/packs/packs/core/files`.
-Non-platform files are written under `.agent-pack/core/` for core, and
-`.agent-pack/modules/<module-id>/` for other modules. Only platform
-directories are written to repo root (`.github/`, `.claude/`, `.codex/`,
-`.vscode/`). Existing user files are not overwritten.
-
-For `core`, memory files under `.agent-pack/core/context/*` and
-`.agent-pack/core/work/*` are never overwritten by `add`, including
-`add --force`. Missing memory files can be created, but existing files are
-treated as user-owned state.
-
-`add` also stores versioned snapshots at:
-
-```txt
-.agent-pack/system/templates/<module-id>/<version>/*
-```
-
-State is tracked in:
-
-```txt
-.agent-pack/system/state.json
-```
-
-## Refresh behavior
-
-`refresh` compares local memory files with template snapshots:
-
-- `report`: print statuses, no writes
-- `merge`: apply clean 3-way merges; write conflict artifacts under
+- `report`: detect drift, no writes
+- `merge`: perform clean 3-way merges and write conflict artifacts under
   `.agent-pack/system/conflicts/<timestamp>/...`
-- `reset`: backup local files under `.agent-pack/backups/<timestamp>/...` and
+- `reset`: back up local files under `.agent-pack/backups/<timestamp>/...` and
   replace with template content
 
 Status labels include:
@@ -114,33 +173,69 @@ Status labels include:
 - `missing-local`
 - `conflict-risk`
 
-## AGENTS.md safety
+### AGENTS.md safety
 
-Default behavior never overwrites an existing `AGENTS.md`.
+Default behavior never overwrites existing `AGENTS.md`.
 
-To overwrite:
+To overwrite intentionally:
 
 1. pass `--agents-md=overwrite`
-2. and either:
-   - pass `--force-agents-md` in non-interactive mode
-   - or type `OVERWRITE AGENTS.md` when prompted interactively
+2. and either pass `--force-agents-md` (non-interactive), or confirm in
+   interactive mode
 
-## Monorepo layout
+### Migration note
 
-```txt
-packages/
-  cli/    # npm package: agent-pack
-  packs/  # npm package: @agentpack/packs
-```
+Legacy CLI commands (`install`, `sync-skills`) were removed.
+Use `add`, `refresh`, `list`, and `info`.
 
-## Development
+## Agent roles (by role, not swarm)
+
+Typical roles:
+
+- planner -> backlog to executable plan, ambiguity resolution
+- researcher -> options analysis with recommendation
+- builder -> implements one task
+- reviewer -> validates output quality and checks
+- scribe -> keeps project memory clean and consistent
+
+The key is not swarm size, but strict output contracts per role.
+
+## Output contracts
+
+Every command and role output should state:
+
+- files updated
+- decisions made
+- tasks/checks created or changed
+- unknowns or required user input
+
+If output does not match its contract, it is incomplete.
+
+## What agent-pack deliberately does not do
+
+- No mandatory phases
+- No required agent swarms
+- No giant planning trees
+- No pretending long-range plans survive reality unchanged
+
+If you want heavier process, GSD is a great fit.
+agent-pack is for moving fast without losing your footing.
+
+## Development (this repository)
 
 ```bash
 npm test
 npm run pack:cli
 ```
 
-## Migration note
+Monorepo packages:
 
-Legacy commands (`install`, `sync-skills`) were removed from the CLI surface.
-Use `add`, `list`, and `info`.
+- `packages/cli` -> npm package `agent-pack`
+- `packages/packs` -> npm package `@agentpack/packs`
+
+## Status
+
+agent-pack is intentionally small and evolving. Simplicity is a feature.
+
+The README defines the philosophy and the public surface area.
+Everything else should earn its existence.
