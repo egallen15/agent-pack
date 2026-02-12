@@ -16,4 +16,4 @@ directly unless you are building tooling around Agent-Pack packs.
 ## Docs
 
 See the repo README for full docs and module authoring guidance:
-https://github.com/egallen15/agent-pack#readme
+<https://github.com/egallen15/agent-pack#readme>

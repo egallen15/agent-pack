@@ -26,4 +26,4 @@ agent-pack refresh core --scope=all --mode=report
 ## Docs
 
 See the repo README for full docs and module authoring guidance:
-https://github.com/egallen15/agent-pack#readme
+<https://github.com/egallen15/agent-pack#readme>
