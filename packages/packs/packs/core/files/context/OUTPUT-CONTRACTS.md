@@ -51,6 +51,10 @@ Every command and agent must produce output that can be summarized using the fol
 
 - <question or missing info>
 
+### Suggested next steps
+
+- <1-3 commands a user can run next>
+
 ```
 
 Sections may be empty, but they should never be omitted.
@@ -128,6 +132,14 @@ If progress depends on missing information:
 - Do not silently guess unless a default is documented.
 
 Clear handoffs prevent rework and hallucinated assumptions.
+
+⸻
+
+## Suggested next steps
+
+To help a smooth flow (init -> plan -> do -> check), include 1-3 next-step commands.
+
+These suggestions are meant to be machine-readable so clients (like VS Code) can surface them as actions.
 
 ⸻
 

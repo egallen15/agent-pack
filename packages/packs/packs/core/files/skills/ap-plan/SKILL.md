@@ -90,6 +90,7 @@ May consult (if exists):
 - Prefer clarity over completeness.
 - If uncertainty is high, reduce plan scope rather than adding complexity.
 - When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
+- Include a Suggested next steps section with 1-3 commands that naturally move into /ap:do.
 
 ---
 
@@ -120,6 +121,11 @@ May consult (if exists):
 ### Unknowns / needs input
 
 - <questions>
+
+### Suggested next steps
+
+- /ap:do T### - <task title>
+- /ap:do T### - <task title>
 
 </Output-Structure>
 ```

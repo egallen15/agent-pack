@@ -90,6 +90,7 @@ If these do not exist, create them from templates.
 - Do not invent requirements.
 - If uncertain, explicitly mark assumptions.
 - When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
+- Include a Suggested next steps section with 1-3 commands that naturally move into /ap:plan.
 
 ---
 
@@ -123,6 +124,11 @@ If these do not exist, create them from templates.
 ### Unknowns / needs input
 
 - <questions>
+
+### Suggested next steps
+
+- /ap:plan (select 1-3 backlog items)
+- /ap:plan ("plan the next best step")
 
 ```
 

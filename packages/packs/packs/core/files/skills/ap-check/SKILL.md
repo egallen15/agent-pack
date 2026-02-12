@@ -79,6 +79,7 @@ May consult:
 - Checks must not be redefined during verification.
 - Evidence should be sufficient for later review.
 - When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
+- Include a Suggested next steps section with 1-3 commands; if the plan is complete, suggest starting a new /ap:plan.
 
 ---
 
@@ -108,6 +109,11 @@ May consult:
 ### Unknowns / needs input
 
 - <questions or blockers>
+
+### Suggested next steps
+
+- /ap:do T### - <fix task title>
+- /ap:plan (select 1-3 backlog items)
 ```
 
 ---

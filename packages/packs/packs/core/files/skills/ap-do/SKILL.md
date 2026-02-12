@@ -82,6 +82,7 @@ May consult:
 - Prefer correctness and clarity over cleverness.
 - If the task reveals a missing decision, stop and report it.
 - When listing milestones, backlog items, tasks, or checks in chat output, always include ID and title in `ID - Title` format.
+- Include a Suggested next steps section with 1-3 commands that move into /ap:check or the next /ap:do.
 
 ---
 
@@ -108,6 +109,11 @@ May consult:
 ### Unknowns / needs input
 
 - <questions or blockers>
+
+### Suggested next steps
+
+- /ap:check C### - <check title>
+- /ap:do T### - <next task title>
 ```
 
 ---
