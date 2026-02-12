@@ -24,3 +24,4 @@ temp/
 
 ### Agent Pack runtime artifacts
 .agent-pack/runs/
+*.tgz

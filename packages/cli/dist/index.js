@@ -289,7 +289,7 @@ function resolvePacksRoot() {
     return path.resolve(process.env.AGENTPACK_PACKS_ROOT);
   }
   try {
-    const pkgPath = require.resolve("@agentpack/packs/package.json", {
+    const pkgPath = require.resolve("@agent-pack/packs/package.json", {
       paths: [process.cwd(), __dirname],
     });
     return path.join(path.dirname(pkgPath), "packs");

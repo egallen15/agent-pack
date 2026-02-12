@@ -380,8 +380,8 @@ npm run pack:cli
 
 Monorepo packages:
 
-- `packages/cli` -> npm package `agent-pack`
-- `packages/packs` -> npm package `@agentpack/packs`
+- `packages/cli` -> npm package `@agent-pack/cli`
+- `packages/packs` -> npm package `@agent-pack/packs`
 
 ## Status
 

@@ -1,7 +1,22 @@
 {
-  "name": "agent-pack",
+  "name": "@agent-pack/cli",
   "version": "0.1.0",
   "description": "Agent-Pack CLI",
+  "keywords": [
+    "agent-pack",
+    "agents",
+    "cli",
+    "workflow"
+  ],
+  "homepage": "https://github.com/egallen15/agent-pack#readme",
+  "bugs": {
+    "url": "https://github.com/egallen15/agent-pack/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egallen15/agent-pack.git",
+    "directory": "packages/cli"
+  },
   "license": "MIT",
   "bin": {
     "agent-pack": "dist/index.js",
@@ -11,9 +26,10 @@
     "dist/"
   ],
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "prepublishOnly": "node -e \"const fs=require('fs');fs.accessSync('dist/index.js');\""
   },
   "dependencies": {
-    "@agentpack/packs": "0.1.0"
+    "@agent-pack/packs": "0.1.0"
   }
 }

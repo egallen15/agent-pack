@@ -1,7 +1,25 @@
 {
-  "name": "@agentpack/packs",
+  "name": "@agent-pack/packs",
   "version": "0.1.0",
   "description": "Official Agent-Pack modules and loadouts",
+  "keywords": [
+    "agent-pack",
+    "agents",
+    "modules",
+    "loadouts"
+  ],
+  "homepage": "https://github.com/egallen15/agent-pack#readme",
+  "bugs": {
+    "url": "https://github.com/egallen15/agent-pack/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egallen15/agent-pack.git",
+    "directory": "packages/packs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "files": [
     "packs/"
