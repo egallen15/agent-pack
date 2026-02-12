@@ -1,6 +1,6 @@
 {
   "name": "@agent-pack/packs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official Agent-Pack modules and loadouts",
   "keywords": [
     "agent-pack",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/egallen15/agent-pack.git",
+    "url": "git+https://github.com/egallen15/agent-pack.git",
     "directory": "packages/packs"
   },
   "publishConfig": {

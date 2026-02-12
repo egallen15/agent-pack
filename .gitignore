@@ -22,6 +22,9 @@ logs/
 tmp/
 temp/
 
+### Dependencies
+node_modules/
+
 ### Agent Pack runtime artifacts
 .agent-pack/runs/
 *.tgz
