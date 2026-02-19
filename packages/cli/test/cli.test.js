@@ -156,6 +156,34 @@ test("legacy command exits with migration guidance", () => {
   assert.match(result.stderr, /Legacy command/);
 });
 
+test("clean-empty-dirs removes empty directories inside .agent-pack", () => {
+  const cwd = makeTempDir("agentpack-clean-empty-");
+  const emptyLeaf = path.join(cwd, ".agent-pack", "modules", "unused");
+  const nonEmptyDir = path.join(cwd, ".agent-pack", "core", "context");
+  fs.mkdirSync(emptyLeaf, { recursive: true });
+  fs.mkdirSync(nonEmptyDir, { recursive: true });
+  fs.writeFileSync(path.join(nonEmptyDir, "PROJECT.md"), "keep\n", "utf8");
+
+  const result = runCli(["clean-empty-dirs"], { cwd });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Removed empty directories:/);
+  assert.equal(fs.existsSync(emptyLeaf), false);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack", "modules")), false);
+  assert.equal(fs.existsSync(path.join(nonEmptyDir, "PROJECT.md")), true);
+  assert.equal(fs.existsSync(path.join(cwd, ".agent-pack")), true);
+});
+
+test("clean-empty-dirs dry-run reports candidates without deleting", () => {
+  const cwd = makeTempDir("agentpack-clean-empty-dryrun-");
+  const emptyLeaf = path.join(cwd, ".agent-pack", "system", "tmp", "empty");
+  fs.mkdirSync(emptyLeaf, { recursive: true });
+
+  const result = runCli(["clean-empty-dirs", "--dry-run"], { cwd });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Would remove empty directories:/);
+  assert.equal(fs.existsSync(emptyLeaf), true);
+});
+
 test("resolver fails on missing dependency", () => {
   const cwd = makeTempDir("agentpack-missing-dep-");
   const packsRoot = makeTempDir("agentpack-packs-1-");

@@ -99,6 +99,23 @@ async function main() {
     return;
   }
 
+  if (command === "clean-empty-dirs") {
+    const result = cleanEmptyDirectories({ cwd: process.cwd(), dryRun: flags.dryRun });
+    if (result.checkedRootMissing) {
+      console.log("No .agent-pack directory found.");
+      return;
+    }
+    if (result.removed.length === 0) {
+      console.log("No empty directories to clean.");
+      return;
+    }
+    console.log(`${flags.dryRun ? "Would remove" : "Removed"} empty directories:`);
+    for (const dir of result.removed) {
+      console.log(`- ${dir}`);
+    }
+    return;
+  }
+
   console.error(`Unknown command: ${command}`);
   printHelp();
   process.exit(EXIT_CODES.ERROR);
@@ -213,6 +230,7 @@ function printHelp() {
   console.log("Usage:");
   console.log("  agent-pack add <module-or-loadout> [flags]");
   console.log("  agent-pack refresh <module-or-loadout> [flags]");
+  console.log("  agent-pack clean-empty-dirs [--dry-run]");
   console.log("  agent-pack list [--type=all|module|loadout]");
   console.log("  agent-pack info <id> [--json]");
   console.log("");
@@ -221,6 +239,7 @@ function printHelp() {
   console.log("  npx agent-pack add module:research");
   console.log("  npx agent-pack add loadout:researcher");
   console.log("  npx agent-pack refresh core --mode=report");
+  console.log("  npx agent-pack clean-empty-dirs");
   console.log("  npx agentpack list");
   console.log("");
   console.log("Flags:");
@@ -1140,6 +1159,45 @@ function removeDirIfExists(dirPath) {
     return;
   }
   fs.rmSync(dirPath, { recursive: true, force: true });
+}
+
+function cleanEmptyDirectories({ cwd, dryRun }) {
+  const rootDir = path.join(cwd, ".agent-pack");
+  if (!fs.existsSync(rootDir) || !fs.statSync(rootDir).isDirectory()) {
+    return { checkedRootMissing: true, removed: [] };
+  }
+
+  const removed = [];
+  removeEmptyDirectoriesRecursive({ cwd, currentDir: rootDir, removed, dryRun });
+  removed.sort();
+  return { checkedRootMissing: false, removed };
+}
+
+function removeEmptyDirectoriesRecursive({ cwd, currentDir, removed, dryRun }) {
+  const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+    removeEmptyDirectoriesRecursive({
+      cwd,
+      currentDir: path.join(currentDir, entry.name),
+      removed,
+      dryRun,
+    });
+  }
+
+  const remaining = fs.readdirSync(currentDir);
+  if (remaining.length > 0) {
+    return;
+  }
+
+  if (!dryRun) {
+    fs.rmdirSync(currentDir);
+  }
+  const relativePath = toPosix(path.relative(cwd, currentDir));
+  removed.push(relativePath);
 }
 
 function cleanupLegacyCoreReferencesDir({ cwd, flags, actions, filesWritten }) {

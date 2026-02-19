@@ -277,6 +277,7 @@ npx agent-pack add core
 ```bash
 agent-pack add <module-or-loadout>
 agent-pack refresh <module-or-loadout> [--scope=context|work|all] [--mode=report|merge|reset]
+agent-pack clean-empty-dirs [--dry-run]
 agent-pack list [--type=all|module|loadout]
 agent-pack info <id> [--json]
 ```
@@ -314,6 +315,12 @@ agent-pack refresh loadout:fullstack --mode=reset --scope=all --yes
   `.agent-pack/system/conflicts/<timestamp>/...`
 - `reset`: back up local files under `.agent-pack/backups/<timestamp>/...` and
   replace with template content
+
+### `clean-empty-dirs` behavior
+
+- removes empty directories under `.agent-pack` recursively
+- keeps any directory that still contains files or subdirectories
+- supports `--dry-run` to report what would be removed without writing
 
 Status labels include:
 

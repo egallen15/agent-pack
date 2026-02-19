@@ -21,6 +21,7 @@ agent-pack list
 agent-pack info core
 agent-pack add core
 agent-pack refresh core --scope=all --mode=report
+agent-pack clean-empty-dirs --dry-run
 ```
 
 ## Docs
